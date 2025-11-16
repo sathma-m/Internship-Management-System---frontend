@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Pro Launch</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #7a3ff5, #3f8ef5);
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .register-box {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 450px; /* Slightly wider to accommodate more fields */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        text-align: center;
+      }
+      h1 {
+        color: #7a3ff5;
+        margin-bottom: 25px;
+      }
+      label {
+        display: block;
+        text-align: left;
+        margin: 10px 0 5px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      input[type="number"],
+      select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: 16px;
+        transition: border-color 0.2s;
+      }
+      input:focus, select:focus {
+        border-color: #7a3ff5;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(122, 63, 245, 0.2);
+      }
+      button {
+        background: #7a3ff5;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        width: 100%;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: background 0.2s;
+        margin-top: 10px;
+      }
+      button:hover {
+        background: #6a2ccf;
+      }
+      .login-link {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #555;
+      }
+      .login-link a {
+        color: #7a3ff5;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .login-link a:hover {
+        text-decoration: underline;
+      }
+      .message-box {
+          position: fixed;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: #4CAF50;
+          color: white;
+          padding: 12px 25px;
+          border-radius: 8px;
+          z-index: 1000;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+          display: none;
+          font-weight: bold;
+      }
+      .message-box.error {
+          background: #f44336;
+      }
+      /* Conditional field groups */
+      .conditional-fields {
+          border: 1px solid #e0e0e0;
+          padding: 10px 15px 5px;
+          margin-bottom: 15px;
+          border-radius: 8px;
+          background: #fcfcff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="register-box">
+      <h1>Register for Pro Launch</h1>
+
+      <form id="registrationForm">
+
+        <!-- 1. ROLE SELECTION (MOVED TO TOP) -->
+        <label for="role">User Role</label>
+        <select id="role" required>
+          <option value="">Select your role...</option>
+          <option value="student">Student/Intern</option>
+          <option value="coordinator">Coordinator/Mentor</option>
+          <option value="company">Company Partner</option>
+          <option value="admin">System Administrator</option>
+        </select>
+
+        <label for="fullName">Full Name</label>
+        <input
+          type="text"
+          id="fullName"
+          placeholder="Enter your full name"
+          required
+        />
+
+        <label for="email">Email Address (Username)</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your email address"
+          required
+        />
+        
+        <!-- 2. CONDITIONAL FIELDS CONTAINER -->
+        <div id="studentFields" class="conditional-fields" style="display: none;">
+            <p style="font-weight: bold; color: #7a3ff5; margin-bottom: 10px;">Student Details</p>
+            <label for="studentID">Student ID Number</label>
+            <input
+              type="text"
+              id="studentID"
+              placeholder="e.g., UO-00123"
+            />
+            <label for="faculty">Faculty/Course of Study</label>
+            <input
+              type="text"
+              id="faculty"
+              placeholder="e.g., Computer Science, Engineering, Business"
+            />
+        </div>
+
+        <div id="coordinatorFields" class="conditional-fields" style="display: none;">
+            <p style="font-weight: bold; color: #7a3ff5; margin-bottom: 10px;">Coordinator Details</p>
+            <label for="staffID">Staff/Employee ID</label>
+            <input
+              type="text"
+              id="staffID"
+              placeholder="e.g., STF-456, EMP-789"
+            />
+            <label for="coordinatorDept">Department/Faculty</label>
+            <input
+              type="text"
+              id="coordinatorDept"
+              placeholder="e.g., Training Department, Engineering Faculty"
+            />
+        </div>
+
+        <div id="companyFields" class="conditional-fields" style="display: none;">
+            <p style="font-weight: bold; color: #7a3ff5; margin-bottom: 10px;">Company Details</p>
+            <label for="companyName">Company Name</label>
+            <input
+              type="text"
+              id="companyName"
+              placeholder="e.g., Tech Solutions Inc."
+            />
+            <label for="jobTitle">Your Job Title</label>
+            <input
+              type="text"
+              id="jobTitle"
+              placeholder="e.g., HR Manager, CTO"
+            />
+        </div>
+        
+        <!-- 3. PASSWORD FIELDS (REMAIN REQUIRED FOR ALL) -->
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Create a password"
+          required
+        />
+
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          placeholder="Repeat password"
+          required
+        />
+
+        <button type="submit">Register Account</button>
+      </form>
+
+      <!-- Link back to Login -->
+      <div class="login-link">
+        Already have an account? <a href="login.html">Log in here</a>
+      </div>
+    </div>
+
+    <!-- Custom Message Box -->
+    <div id="messageBox" class="message-box"></div>
+
+    <script>
+      // Utility function to display a custom message box instead of alert()
+      function showMessage(message, isError = false) {
+          const msgBox = document.getElementById('messageBox');
+          msgBox.textContent = message;
+          msgBox.classList.remove('error');
+          if (isError) {
+              msgBox.classList.add('error');
+          }
+          msgBox.style.display = 'block';
+          setTimeout(() => msgBox.style.display = 'none', 3000);
+      }
+      
+      const roleSelect = document.getElementById('role');
+      const studentFields = document.getElementById('studentFields');
+      const coordinatorFields = document.getElementById('coordinatorFields');
+      const companyFields = document.getElementById('companyFields');
+
+      const studentIdInput = document.getElementById('studentID');
+      const facultyInput = document.getElementById('faculty');
+      const staffIdInput = document.getElementById('staffID');
+      const coordinatorDeptInput = document.getElementById('coordinatorDept');
+      const companyNameInput = document.getElementById('companyName');
+      const jobTitleInput = document.getElementById('jobTitle');
+      
+      // Function to manage visibility and required status
+      function updateFormFields(selectedRole) {
+          // Hide all conditional fields first
+          studentFields.style.display = 'none';
+          coordinatorFields.style.display = 'none';
+          companyFields.style.display = 'none';
+
+          // Set all conditional inputs to not required initially
+          // This prevents validation errors when fields are hidden
+          [studentIdInput, facultyInput, staffIdInput, coordinatorDeptInput, companyNameInput, jobTitleInput]
+            .forEach(input => input.removeAttribute('required'));
+
+          // Show relevant fields and set them as required
+          switch (selectedRole) {
+              case 'student':
+                  studentFields.style.display = 'block';
+                  studentIdInput.setAttribute('required', 'required');
+                  facultyInput.setAttribute('required', 'required');
+                  break;
+              case 'coordinator':
+                  coordinatorFields.style.display = 'block';
+                  staffIdInput.setAttribute('required', 'required');
+                  coordinatorDeptInput.setAttribute('required', 'required');
+                  break;
+              case 'company':
+                  companyFields.style.display = 'block';
+                  companyNameInput.setAttribute('required', 'required');
+                  jobTitleInput.setAttribute('required', 'required');
+                  break;
+          }
+      }
+
+      // Listen for role change
+      roleSelect.addEventListener('change', (e) => updateFormFields(e.target.value));
+
+      // Initial call to set state based on default selection (which should be empty)
+      updateFormFields(roleSelect.value);
+
+      document
+        .getElementById("registrationForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const fullName = document.getElementById("fullName").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const role = roleSelect.value;
+          const password = document.getElementById("password").value;
+          const confirmPassword = document.getElementById("confirmPassword").value;
+
+          if (!role) {
+            showMessage("Please select your role.", true);
+            return;
+          }
+
+          if (password !== confirmPassword) {
+            showMessage("Error: Passwords do not match.", true);
+            return;
+          }
+
+          // Gather role-specific data and check required fields
+          let roleData = {};
+          let fieldsValid = true;
+          
+          switch (role) {
+              case 'student':
+                  if (!studentIdInput.value || !facultyInput.value) {
+                      fieldsValid = false;
+                      showMessage("Please fill in the Student ID and Faculty/Course details.", true);
+                  }
+                  roleData = {
+                      studentID: studentIdInput.value.trim(),
+                      faculty: facultyInput.value.trim(),
+                      isInterned: false
+                  };
+                  break;
+              case 'coordinator':
+                  if (!staffIdInput.value || !coordinatorDeptInput.value) {
+                      fieldsValid = false;
+                      showMessage("Please fill in the Staff ID and Department/Faculty details.", true);
+                  }
+                  roleData = {
+                      staffID: staffIdInput.value.trim(),
+                      department: coordinatorDeptInput.value.trim(),
+                  };
+                  break;
+              case 'company':
+                  if (!companyNameInput.value || !jobTitleInput.value) {
+                      fieldsValid = false;
+                      showMessage("Please fill in the Company Name and Job Title details.", true);
+                  }
+                  roleData = {
+                      companyName: companyNameInput.value.trim(),
+                      jobTitle: jobTitleInput.value.trim(),
+                  };
+                  break;
+              case 'admin':
+                  // No extra fields required for admin
+                  break;
+          }
+          
+          if (!fieldsValid) return;
+
+
+          // **DEMO STORAGE**: Use localStorage to store registered users
+          const key = 'proLaunchUsers';
+          const existingUsers = JSON.parse(localStorage.getItem(key) || '[]');
+
+          // Check if email already exists
+          const emailExists = existingUsers.some(user => user.email === email);
+          if (emailExists) {
+            showMessage("Error: An account with this email already exists.", true);
+            return;
+          }
+
+          // Create new user object
+          const newUser = {
+            fullName,
+            email,
+            password, // NOTE: In a real application, NEVER store plain passwords. Use a hash function.
+            role,
+            ...roleData // Merge role-specific data
+          };
+
+          existingUsers.push(newUser);
+          localStorage.setItem(key, JSON.stringify(existingUsers));
+
+          // Success message and redirect
+          showMessage("Registration successful! Redirecting to login...", false);
+          
+          // Clear form fields
+          document.getElementById("registrationForm").reset();
+
+          // Reset form visuals
+          updateFormFields('');
+
+          // Redirect to login after 1.5 seconds
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 1500);
+        });
+    </script>
+  </body>
+</html>

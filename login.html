@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Pro Launch</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #7a3ff5, #3f8ef5);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .login-box {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        width: 350px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+      h1 {
+        color: #7a3ff5;
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        text-align: left;
+        margin: 10px 0 5px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+      }
+      input[type="text"],
+      input[type="password"],
+      select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+      button {
+        background: #7a3ff5;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        width: 100%;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: background 0.2s;
+      }
+      button:hover {
+        background: #6a2ccf;
+      }
+      .register-link,
+      .forgot-password {
+        margin-top: 15px;
+        font-size: 14px;
+        color: #555;
+      }
+      .register-link a,
+      .forgot-password a {
+        color: #7a3ff5;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .register-link a:hover,
+      .forgot-password a:hover {
+        text-decoration: underline;
+      }
+      .note {
+        margin-top: 20px;
+        font-size: 12px;
+        color: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-box">
+      <h1>PRO LAUNCH Login</h1>
+
+      <form id="loginForm">
+        <label for="role">User Role</label>
+        <select id="role" required>
+          <option value="">Select your role...</option>
+          <option value="student">Student/Intern</option>
+          <option value="coordinator">Coordinator/Mentor</option>
+          <option value="company">Company Partner</option>
+          <option value="admin">System Administrator</option>
+        </select>
+
+        <label for="username">Username (Demo)</label>
+        <input
+          type="text"
+          id="username"
+          placeholder="Enter username (e.g., JaneDoe)"
+          required
+        />
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter password"
+          required
+        />
+        <div class="forgot-password">
+          <a href="forgot-password.html">Forgot password?</a>
+        </div>
+
+        <button type="submit">Login</button>
+      </form>
+      <p class="note">Login will redirect based on your role.</p>
+
+      <!-- Link to Registration -->
+      <div class="register-link">
+        Don’t have an account? <a href="registration.html">Register here</a>
+      </div>
+    </div>
+
+    <script>
+      // Utility function to display a custom message box instead of alert()
+      function showMessage(message) {
+          const msg = document.createElement('div');
+          msg.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #7a3ff5; color: white; padding: 10px 20px; border-radius: 8px; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2);';
+          msg.textContent = message;
+          document.body.appendChild(msg);
+          setTimeout(() => msg.remove(), 3000);
+      }
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const role = document.getElementById("role").value;
+          const username = document.getElementById("username").value.trim();
+
+          if (!role) {
+            showMessage("Please select a role to continue.");
+            return;
+          }
+          
+          // **FOR DEMO ONLY**: Assuming any input is correct. 
+          // In a real application, you would validate credentials here.
+
+          // Save who logged in (demo-only)
+          localStorage.setItem("role", role);
+          localStorage.setItem("username", username || "User");
+          // Reset intern status: set to 'true' if student, 'false' otherwise
+          localStorage.setItem('isInterned', role === 'student' ? 'true' : 'false'); 
+
+          // Define routing based on role
+          const routes = {
+            admin: "ad.html", // System Administrator dashboard
+            coordinator: "coordinator-dashboard.html", // New Coordinator dashboard
+            student: "dashboard.html", // Student section
+            company: "index.html", // Company section (Internship postings list)
+          };
+          window.location.href = routes[role] || "home page.html";
+        });
+    </script>
+  </body>
+</html>

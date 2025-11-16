@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intern's Blog & Posts</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5ff;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    header h1 { color: #7a3ff5; margin: 0; font-size: 24px; }
+    header nav a {
+      text-decoration: none;
+      color: #333;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: #f0f0ff;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      margin-bottom: 25px;
+    }
+
+    /* Post Form Styling */
+    #postForm input[type="text"],
+    #postForm textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    #postForm textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+
+    #postForm button {
+      background: #7a3ff5;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    #postForm button:hover {
+      background: #6a2ccf;
+    }
+
+    /* Posts List */
+    .post {
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+    }
+
+    .post:last-child {
+      border-bottom: none;
+    }
+
+    .post h3 {
+      color: #7a3ff5;
+      margin-top: 0;
+      margin-bottom: 5px;
+      font-size: 18px;
+    }
+
+    .post p {
+      margin-bottom: 10px;
+      color: #555;
+      font-size: 15px;
+    }
+
+    .post-meta {
+      font-size: 12px;
+      color: #999;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Access Restriction Alert */
+    #accessAlert {
+      background: #ffe0b2; /* Light orange for warning */
+      color: #e65100; /* Darker orange text */
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      margin-top: 20px;
+      border: 2px solid #ff9800;
+      display: none; /* Hidden by default */
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 600px) {
+        header { padding: 15px; }
+        header h1 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PRO LAUNCH Blog</h1>
+    <nav>
+      <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+    </nav>
+  </header>
+
+  <main>
+    <div id="accessAlert">
+      <p><i class="fas fa-lock"></i> **Access Denied:** Only **Interned Students** can create new blog posts. Please wait for your internship application to be accepted!</p>
+    </div>
+
+    <div class="card" id="postCreationCard">
+      <h2><i class="fas fa-feather-alt"></i> Create a New Post</h2>
+      <form id="postForm">
+        <input type="text" id="postTitle" placeholder="Title of your post" required>
+        <textarea id="postContent" placeholder="Share your internship experience, insights, or advice..." required></textarea>
+        <button type="submit">Submit Post</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-globe"></i> Community Posts</h2>
+      <div id="postsList">
+        <!-- Mock Posts -->
+        <div class="post">
+            <h3>Handling My First Tech Stack Change</h3>
+            <p>I learned quickly that in the real world, technologies change fast. My team suddenly shifted from React to Vue, and it was a steep but rewarding learning curve. Don't be afraid to embrace new things!</p>
+            <div class="post-meta">
+                <span>Posted by: Jane Doe (Intern)</span>
+                <span><i class="far fa-clock"></i> 2 hours ago</span>
+            </div>
+        </div>
+        <div class="post">
+            <h3>The Importance of Documentation</h3>
+            <p>Spending an extra hour writing clear documentation saves the whole team days of work down the line. It's not the most glamorous task, but it's crucial for project success.</p>
+            <div class="post-meta">
+                <span>Posted by: John Smith (Intern)</span>
+                <span><i class="far fa-clock"></i> Yesterday</span>
+            </div>
+        </div>
+        <!-- Posts will be prepended here dynamically -->
+        <div id="noPostsMessage" class="post" style="text-align: center; color: #999; font-style: italic; display: none;">No posts yet. Be the first to share your experience!</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Utility function to display a custom message box instead of alert()
+    function showMessage(message) {
+        const msg = document.createElement('div');
+        msg.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #4caf50; color: white; padding: 10px 20px; border-radius: 8px; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2);';
+        msg.textContent = message;
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const role = localStorage.getItem("role");
+        const isInterned = localStorage.getItem('isInterned') === 'true';
+
+        const postCreationCard = document.getElementById('postCreationCard');
+        const accessAlert = document.getElementById('accessAlert');
+        const postForm = document.getElementById('postForm');
+        const postsList = document.getElementById('postsList');
+        const username = localStorage.getItem("username") || "Intern"; // Get current user
+
+        // --- Role and Interned Status Check ---
+        if (role !== 'student' && role !== 'admin') {
+            window.location.href = 'login.html'; // Redirect non-students/admins
+            return;
+        }
+
+        if (!isInterned) {
+            // New student - restrict access to creation form
+            postCreationCard.classList.add('hidden');
+            accessAlert.style.display = 'block';
+        } else {
+            // Interned student - allow posting
+            postForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const title = document.getElementById('postTitle').value.trim();
+                const content = document.getElementById('postContent').value.trim();
+
+                if (!title || !content) {
+                    showMessage("Please fill out both the title and content.");
+                    return;
+                }
+
+                const newPostHtml = `
+                    <div class="post">
+                        <h3>${title}</h3>
+                        <p>${content}</p>
+                        <div class="post-meta">
+                            <span>Posted by: ${username} (Intern)</span>
+                            <span><i class="far fa-clock"></i> Just now</span>
+                        </div>
+                    </div>
+                `;
+
+                // Prepend the new post
+                postsList.insertAdjacentHTML('afterbegin', newPostHtml);
+
+                // Clear form
+                postForm.reset();
+                document.getElementById('noPostsMessage').style.display = 'none';
+
+                showMessage("Your post has been successfully published!");
+            });
+        }
+        
+        // Check if only mock posts exist, hide 'no posts'
+        if (postsList.children.length > 0) {
+            document.getElementById('noPostsMessage').style.display = 'none';
+        }
+    });
+
+    // Simple navigation for demonstration
+    (function () {
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('role');
+                localStorage.removeItem('username');
+                localStorage.removeItem('isInterned');
+                window.location.href = 'login.html';
+            });
+        }
+    })();
+  </script>
+</body>
+</html>
