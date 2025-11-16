@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Profile Settings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* General Reset & Variables */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    :root {
+      --primary: #7a3ff5;
+      --accent: #3f8ef5;
+      --bg-light: #f5f5ff;
+      --card-bg: #ffffff;
+      --text-dark: #222;
+      --text-gray: #6c757d;
+      --success: #4caf50;
+      --error: #f44336;
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      --radius: 14px;
+    }
+    body {
+      background: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* Header & Navigation (Mimicking Dashboard style) */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: var(--card-bg);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    }
+    header h1 { 
+      color: var(--primary); 
+      margin: 0; 
+      font-size: 20px; 
+    }
+    .back-link {
+      text-decoration: none;
+      color: var(--text-dark);
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: #f0f0ff;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    .back-link:hover {
+      background: #e0e0ff;
+    }
+
+    /* Main Content Layout */
+    main {
+      max-width: 800px;
+      margin: 30px auto;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 25px;
+      font-size: 26px;
+    }
+
+    /* Form Styling */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+    input[type="text"], 
+    input[type="email"], 
+    textarea, 
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 5px rgba(122, 63, 245, 0.2);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* File Upload Area */
+    .cv-upload-info {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px dashed #ddd;
+      margin-top: 10px;
+    }
+    .cv-upload-info .cv-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .cv-upload-info .cv-link:hover {
+      text-decoration: underline;
+    }
+    
+    /* Submit Button */
+    button[type="submit"] {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-top: 30px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+    button[type="submit"]:hover {
+      opacity: 0.9;
+    }
+
+    /* Message Popup */
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: var(--success);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      z-index: 1000;
+      display: none;
+      transition: opacity 0.3s;
+    }
+    .error-popup {
+      background-color: var(--error);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      header {
+        padding: 15px 15px;
+      }
+      main {
+        margin: 20px 10px;
+        padding: 20px;
+      }
+      h2 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-user-circle"></i> Student Profile</h1>
+    <a href="dashboard.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+  </header>
+
+  <main>
+    <h2>Edit Profile Information</h2>
+    
+    <form id="profileForm">
+      
+      <!-- Full Name -->
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+      </div>
+
+      <!-- Email (Read-Only/Reference) -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Your email address" readonly disabled value="student.demo@prolaunch.com">
+        <small style="color: var(--text-gray);">Email is managed by your account settings.</small>
+      </div>
+
+      <!-- Department -->
+      <div class="form-group">
+        <label for="department">Department</label>
+        <input type="text" id="department" name="department" placeholder="e.g., Computer Science, Electrical Engineering" required>
+      </div>
+
+      <!-- Degree -->
+      <div class="form-group">
+        <label for="degree">Degree</label>
+        <input type="text" id="degree" name="degree" placeholder="e.g., BSc (Hons) Software Engineering" required>
+      </div>
+
+      <!-- Skills -->
+      <div class="form-group">
+        <label for="skills">Skills</label>
+        <textarea id="skills" name="skills" rows="4" placeholder="List your key skills, separated by commas (e.g., Python, React, SQL, Cloud Computing)"></textarea>
+      </div>
+
+      <!-- Projects -->
+      <div class="form-group">
+        <label for="projects">Projects</label>
+        <textarea id="projects" name="projects" rows="6" placeholder="Describe 2-3 of your most relevant projects, including brief details and your contribution."></textarea>
+      </div>
+
+      <!-- Upload CV (PDF only) -->
+      <div class="form-group">
+        <label for="cvInput">Upload CV (PDF only)</label>
+        <input type="file" id="cvInput" name="cvInput" accept=".pdf">
+        <div id="cvInfo" class="cv-upload-info">
+            No CV uploaded yet.
+        </div>
+      </div>
+      
+      <button type="submit">
+        <i class="fas fa-save"></i> Save Profile
+      </button>
+    </form>
+  </main>
+
+  <!-- Success/Error Popups -->
+  <div id="popup" class="popup">Profile saved successfully!</div>
+  <div id="errorPopup" class="popup error-popup"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('profileForm');
+        const cvInput = document.getElementById('cvInput');
+        const cvInfo = document.getElementById('cvInfo');
+        const popup = document.getElementById('popup');
+        const errorPopup = document.getElementById('errorPopup');
+
+        // --- Auth and Init Placeholder (Critical for data separation in real apps) ---
+        // In a real application (using Firebase/Firestore), you would initialize auth here 
+        // and fetch/save data based on the authenticated user ID.
+        // For this single-file demo, we use a fixed key 'studentProfile' in localStorage.
+        
+        // Function to load existing data
+        const loadProfile = () => {
+            try {
+                const savedProfile = JSON.parse(localStorage.getItem('studentProfile') || '{}');
+                
+                if (Object.keys(savedProfile).length > 0) {
+                    form.fullName.value = savedProfile.fullName || '';
+                    form.email.value = savedProfile.email || 'student.demo@prolaunch.com'; // Use a default if not set
+                    form.department.value = savedProfile.department || '';
+                    form.degree.value = savedProfile.degree || '';
+                    form.skills.value = savedProfile.skills || '';
+                    form.projects.value = savedProfile.projects || '';
+
+                    if (savedProfile.cvName && savedProfile.cvData) {
+                        cvInfo.innerHTML = `Current CV: <a href="${savedProfile.cvData}" target="_blank" class="cv-link" download="${savedProfile.cvName}">${savedProfile.cvName}</a>`;
+                    } else {
+                        cvInfo.innerHTML = 'No CV uploaded yet.';
+                    }
+                }
+            } catch (e) {
+                console.error("Error loading profile from localStorage:", e);
+            }
+        };
+
+        // Function to show a temporary message
+        const showMessage = (message, isError = false) => {
+            const el = isError ? errorPopup : popup;
+            const messageText = isError ? `<i class="fas fa-exclamation-triangle"></i> ${message}` : `<i class="fas fa-check-circle"></i> ${message}`;
+            
+            // Clear and hide both first
+            popup.style.display = 'none';
+            errorPopup.style.display = 'none';
+            
+            el.innerHTML = messageText;
+            el.style.display = 'block';
+            setTimeout(() => {
+                el.style.display = 'none';
+            }, 3000);
+        };
+
+        // Form submission handler
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const profileData = {
+                fullName: form.fullName.value.trim(),
+                email: form.email.value.trim() || 'student.demo@prolaunch.com', // Keep existing or use default
+                department: form.department.value.trim(),
+                degree: form.degree.value.trim(),
+                skills: form.skills.value.trim(),
+                projects: form.projects.value.trim(),
+                updatedAt: new Date().toISOString()
+            };
+
+            const file = cvInput.files[0];
+            
+            if (file) {
+                // Check if file is PDF
+                if (file.type !== 'application/pdf') {
+                    showMessage("Only PDF files are allowed for CV upload.", true);
+                    return;
+                }
+                
+                // Read file and save as Base64 (Data URL)
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    profileData.cvName = file.name;
+                    profileData.cvData = event.target.result;
+
+                    // Save data and show success
+                    localStorage.setItem('studentProfile', JSON.stringify(profileData));
+                    showMessage("Profile and CV saved successfully!");
+                    loadProfile(); // Re-render CV info
+                };
+                reader.onerror = function() {
+                    showMessage("Failed to read CV file.", true);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // No new file uploaded, retain existing CV if present
+                const saved = JSON.parse(localStorage.getItem('studentProfile') || '{}');
+                if (saved.cvName && saved.cvData) {
+                    profileData.cvName = saved.cvName;
+                    profileData.cvData = saved.cvData;
+                }
+                
+                // Save data and show success
+                localStorage.setItem('studentProfile', JSON.stringify(profileData));
+                showMessage("Profile details saved successfully!");
+                loadProfile(); // Ensure UI reflects current state
+            }
+        });
+
+        // Initial load of profile data when the page loads
+        loadProfile();
+    });
+  </script>
+</body>
+</html>

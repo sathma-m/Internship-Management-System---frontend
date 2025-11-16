@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply for Internship</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* General Reset & Variables */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    :root {
+      --primary: #7a3ff5;
+      --accent: #3f8ef5;
+      --bg-light: #f5f5ff;
+      --card-bg: #ffffff;
+      --text-dark: #222;
+      --text-gray: #6c757d;
+      --success: #4caf50;
+      --error: #f44336;
+      --shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      --radius: 14px;
+    }
+    body {
+      background: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* Header & Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: var(--card-bg);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    }
+    header h1 { 
+      color: var(--primary); 
+      margin: 0; 
+      font-size: 20px; 
+    }
+    .back-link {
+      text-decoration: none;
+      color: var(--text-dark);
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: #f0f0ff;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    .back-link:hover {
+      background: #e0e0ff;
+    }
+
+    /* Main Content Layout */
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+    .application-container {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    h2 {
+      color: var(--primary);
+      margin-bottom: 5px;
+      font-size: 26px;
+    }
+    .job-title-info {
+        margin-bottom: 25px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+    }
+    .job-title-info p {
+        color: var(--text-gray);
+        font-size: 16px;
+    }
+    
+    /* Form Section */
+    .form-section {
+        margin-top: 25px;
+    }
+    .form-section h3 {
+        color: var(--text-dark);
+        font-size: 20px;
+        border-bottom: 2px solid var(--accent);
+        display: inline-block;
+        padding-bottom: 5px;
+        margin-bottom: 20px;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+    input[type="text"], 
+    input[type="email"], 
+    input[type="tel"],
+    textarea, 
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+    input:disabled, textarea:disabled {
+        background-color: #f8f8f8;
+        color: #888;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 5px rgba(122, 63, 245, 0.2);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .required-info {
+        font-size: 14px;
+        color: var(--text-gray);
+        margin-top: -10px;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    /* CV/Profile Alert Box */
+    .profile-status {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .status-ok {
+        background-color: #e6f7e9; /* Light green */
+        color: var(--success);
+        border: 1px solid var(--success);
+    }
+    .status-warning {
+        background-color: #fff3e6; /* Light orange */
+        color: var(--warning);
+        border: 1px solid #f97316;
+    }
+    .status-warning a {
+        color: #f97316;
+        text-decoration: underline;
+    }
+    
+    /* Submit Button */
+    button[type="submit"] {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-top: 30px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+    button[type="submit"]:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+    button[type="submit"]:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+    
+    /* Message Boxes */
+    #successBox, #errorBox {
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+    }
+    #successBox {
+      background-color: #e6f7e9;
+      color: var(--success);
+      border: 1px solid var(--success);
+    }
+    #errorBox {
+      background-color: #fcebeb;
+      color: var(--error);
+      border: 1px solid var(--error);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      header {
+        padding: 15px 15px;
+      }
+      main {
+        margin: 20px 0;
+      }
+      .application-container {
+        padding: 20px;
+        border-radius: 0;
+      }
+      h2 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-briefcase"></i> Apply Internship</h1>
+    <a href="dashboard.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+  </header>
+
+  <main>
+    <div class="application-container">
+        
+        <div class="job-title-info">
+            <h2 id="jobTitle">Job Title Placeholder</h2>
+            <p id="jobMeta">Company • Location • Reference</p>
+        </div>
+
+        <form id="applyForm">
+            
+            <!-- CV/Profile Status Check -->
+            <div id="profileStatus" class="profile-status status-warning">
+                <i class="fas fa-spinner fa-spin"></i> Loading profile data...
+            </div>
+
+            <div class="form-section">
+                <h3>1. Personal Information (Pre-filled from Profile)</h3>
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" disabled placeholder="Load your profile first" required>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" disabled placeholder="Load your profile first" required>
+                </div>
+                
+                <!-- Phone Number (Editable, as it might change or not be in profile) -->
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your contact phone number (e.g., +94 77 XXXXXXX)" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>2. Academic & Experience Details (Read-Only)</h3>
+                <span class="required-info">These details are taken from your latest <a href="profile.html">Profile Settings</a>.</span>
+
+                <!-- Department & Degree -->
+                <div class="form-group">
+                    <label for="department">Department & Degree</label>
+                    <input type="text" id="department" name="department" disabled value="N/A" required>
+                </div>
+                
+                <!-- Skills -->
+                <div class="form-group">
+                    <label for="skills">Key Skills</label>
+                    <textarea id="skills" name="skills" rows="3" disabled>N/A</textarea>
+                </div>
+
+                <!-- Projects -->
+                <div class="form-group">
+                    <label for="projects">Projects Summary</label>
+                    <textarea id="projects" name="projects" rows="4" disabled>N/A</textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>3. Application Documents</h3>
+                <span class="required-info">Your CV is automatically attached from your profile.</span>
+                
+                <!-- CV Status -->
+                <div class="form-group">
+                    <label>Attached CV</label>
+                    <div id="cvAttachmentStatus" class="profile-status status-warning">
+                        <i class="fas fa-exclamation-circle"></i> CV not attached. Update your profile!
+                    </div>
+                </div>
+
+                <!-- Cover Letter -->
+                <div class="form-group">
+                    <label for="cover">Cover Letter / Statement of Interest</label>
+                    <textarea id="cover" name="cover" rows="8" placeholder="Write a brief cover letter (max 500 words) explaining why you are the best candidate for this role and what you hope to achieve." required></textarea>
+                </div>
+            </div>
+            
+            <button type="submit" id="submitBtn" disabled>
+                <i class="fas fa-paper-plane"></i> Submit Application
+            </button>
+            
+            <div id="successBox">Application submitted successfully! Redirecting to dashboard...</div>
+            <div id="errorBox">Submission failed. Please check your network connection and try again.</div>
+            
+        </form>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const form = document.getElementById('applyForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const profileStatusDiv = document.getElementById('profileStatus');
+        const cvAttachmentStatusDiv = document.getElementById('cvAttachmentStatus');
+
+        // --- 1. Get Internship Details from URL ---
+        const job = urlParams.get('job') || 'Internship Position';
+        const company = urlParams.get('company') || 'Unknown Company';
+        const loc = urlParams.get('loc') || 'Remote';
+        const ref = urlParams.get('ref') || 'REF-0000';
+        
+        document.getElementById('jobTitle').textContent = job;
+        document.getElementById('jobMeta').textContent = `${company} • ${loc} • Ref: ${ref}`;
+
+        // Store current application context
+        const applicationContext = {
+            job, company, loc, ref,
+            posted: urlParams.get('posted') || 'N/A',
+            type: urlParams.get('type') || 'N/A',
+            salary: urlParams.get('salary') || 'N/A',
+            age: urlParams.get('age') || 'N/A',
+        };
+
+        // --- 2. Load Student Profile Data ---
+        let profileData = {};
+        let cvAttached = false;
+
+        const loadProfileAndSetupForm = () => {
+            try {
+                const savedProfile = JSON.parse(localStorage.getItem('studentProfile') || '{}');
+                profileData = savedProfile; // Store for submission
+                
+                let isReady = true;
+                let statusMessage = '';
+                
+                // Check if key personal fields are complete
+                if (!profileData.fullName || !profileData.department || !profileData.degree) {
+                    statusMessage += "Missing required personal details. ";
+                    isReady = false;
+                }
+                
+                // Check CV attachment
+                if (profileData.cvData && profileData.cvName) {
+                    cvAttached = true;
+                    cvAttachmentStatusDiv.classList.remove('status-warning');
+                    cvAttachmentStatusDiv.classList.add('status-ok');
+                    cvAttachmentStatusDiv.innerHTML = `<i class="fas fa-file-pdf"></i> Attached CV: <a href="${profileData.cvData}" target="_blank" class="cv-link" download="${profileData.cvName}">${profileData.cvName}</a>`;
+                } else {
+                    cvAttached = false;
+                    statusMessage += "A PDF CV is mandatory for application. ";
+                    cvAttachmentStatusDiv.classList.remove('status-ok');
+                    cvAttachmentStatusDiv.classList.add('status-warning');
+                    cvAttachmentStatusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> CV not attached. Update your <a href="profile.html">profile</a>!`;
+                }
+
+                // Update Profile Status banner
+                if (isReady && cvAttached) {
+                    profileStatusDiv.classList.remove('status-warning');
+                    profileStatusDiv.classList.add('status-ok');
+                    profileStatusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Profile complete! Ready to submit.`;
+                    submitBtn.disabled = false;
+                } else {
+                    profileStatusDiv.classList.remove('status-ok');
+                    profileStatusDiv.classList.add('status-warning');
+                    profileStatusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Your profile is incomplete: ${statusMessage} Please <a href="profile.html">update your profile</a> to enable submission.`;
+                    submitBtn.disabled = true;
+                }
+
+                // Pre-fill form fields
+                form.fullName.value = profileData.fullName || 'N/A - Update Profile';
+                form.email.value = profileData.email || 'N/A - Update Profile';
+                form.department.value = `${profileData.department || 'N/A'} (${profileData.degree || 'N/A'})`;
+                form.skills.value = profileData.skills || 'No skills listed.';
+                form.projects.value = profileData.projects || 'No projects listed.';
+                
+            } catch (e) {
+                console.error("Error loading profile data:", e);
+                profileStatusDiv.classList.add('status-warning');
+                profileStatusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Failed to load profile data. Please <a href="profile.html">update your profile</a>.`;
+                submitBtn.disabled = true;
+            }
+        };
+
+        // --- 3. Form Submission Handler ---
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const successBox = document.getElementById('successBox');
+            const errorBox = document.getElementById('errorBox');
+            successBox.style.display = 'none';
+            errorBox.style.display = 'none';
+
+            if (submitBtn.disabled) {
+                errorBox.textContent = "Cannot submit: Profile is incomplete or missing CV.";
+                errorBox.style.display = 'block';
+                return;
+            }
+
+            // Collect application data
+            const applicationData = {
+                ...applicationContext, // Internship job details
+                // Student info from the application form (phone is editable)
+                applicantName: form.fullName.value,
+                applicantEmail: form.email.value,
+                applicantPhone: form.phone.value.trim(),
+                coverLetter: form.cover.value.trim(),
+                // Attached profile data (read-only snapshot)
+                studentProfileSnapshot: {
+                    department: profileData.department,
+                    degree: profileData.degree,
+                    skills: profileData.skills,
+                    projects: profileData.projects,
+                    cvName: profileData.cvName,
+                    cvData: profileData.cvData,
+                },
+                status: 'Applied',
+                submittedAt: new Date().toISOString()
+            };
+
+            // DEMO: Save application to local storage (simulating API submission)
+            try {
+                const key = 'pendingApplications';
+                const existing = JSON.parse(localStorage.getItem(key) || '[]');
+                existing.push(applicationData);
+                localStorage.setItem(key, JSON.stringify(existing));
+
+                successBox.style.display = 'block';
+                // Simulate redirect after success
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+                
+                // Disable the button to prevent double-submission
+                submitBtn.disabled = true;
+
+            } catch (e) {
+                console.error("Application submission failed:", e);
+                errorBox.textContent = "Submission failed due to a local storage error. Please try again.";
+                errorBox.style.display = 'block';
+            }
+        });
+
+        // Initialize form
+        loadProfileAndSetupForm();
+    });
+  </script>
+</body>
+</html>

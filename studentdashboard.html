@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --light-blue: #e0e7ff;
+      --gray-text: #6c757d;
+      --card-bg: white;
+      --shadow: 0 4px 15px rgba(0,0,0,0.05);
+      --border-radius: 12px;
+    }
+    body {
+      background: #f5f7fb;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header h1 {
+      color: var(--primary);
+      margin: 0;
+      font-size: 22px;
+    }
+    .nav-buttons button {
+      margin-left: 10px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: var(--light-blue);
+      color: var(--primary);
+      font-weight: 600;
+      transition: background 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .nav-buttons button:hover {
+      background: #c3d2ff;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      margin: 25px auto;
+      padding: 0 20px;
+      display: grid;
+      gap: 25px;
+      /* Define a responsive layout grid */
+      grid-template-areas:
+        "stats stats stats stats"
+        "profile announcements announcements jobs"
+        "applications applications applications applications";
+    }
+
+    /* Stats/Metric Cards */
+    #statsContainer {
+        grid-area: stats;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    .stat-card {
+        background: var(--card-bg);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        transition: transform 0.2s;
+        border-left: 5px solid;
+    }
+    .stat-card:hover {
+        transform: translateY(-3px);
+    }
+    .stat-card h3 {
+        font-size: 16px;
+        color: #7f8c8d;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+    .stat-card p {
+        font-size: 32px;
+        font-weight: 700;
+    }
+
+    /* Color coding for stats */
+    .total-stat { border-left-color: #4361ee; }
+    .total-stat p { color: #4361ee; }
+    .approved-stat { border-left-color: #2ecc71; }
+    .approved-stat p { color: #2ecc71; }
+    .rejected-stat { border-left-color: #e74c3c; }
+    .rejected-stat p { color: #e74c3c; }
+    .pending-stat { border-left-color: #f39c12; }
+    .pending-stat p { color: #f39c12; }
+
+    /* General Section Styling */
+    .section {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+    .section h2 {
+      font-size: 20px;
+      color: var(--secondary);
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #ecf0f1;
+    }
+
+    /* Profile Card */
+    #profileSummary {
+        grid-area: profile;
+        text-align: center;
+    }
+    #profileSummary i {
+        font-size: 50px;
+        color: var(--primary);
+        margin-bottom: 10px;
+    }
+    #profileSummary p {
+        margin: 5px 0;
+        font-size: 1.1em;
+        font-weight: 600;
+    }
+    #profileSummary small {
+        color: #7f8c8d;
+        display: block;
+        margin-bottom: 15px;
+    }
+    .profile-link {
+        display: inline-block;
+        background: var(--primary);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+    .profile-link:hover {
+        background: #3a52c7;
+    }
+
+    /* Announcements */
+    #announcementsList {
+        grid-area: announcements;
+    }
+    .announcement-item {
+        border-bottom: 1px dashed #ecf0f1;
+        padding: 10px 0;
+        font-size: 15px;
+        color: #34495e;
+    }
+    .announcement-item:last-child { border-bottom: none; }
+    .announcement-item strong { color: var(--primary); display: block; }
+    .announcement-item small { color: #95a5a6; }
+
+
+    /* Posted Jobs */
+    #postedJobs {
+        grid-area: jobs;
+        min-height: 250px; /* Ensure space for loading */
+    }
+    #jobsContent {
+        min-height: 150px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .loading-message {
+        text-align: center;
+        padding: 20px;
+        color: var(--gray-text);
+    }
+    .no-jobs {
+        text-align: center;
+        padding: 20px;
+        color: #e74c3c;
+        font-weight: 600;
+    }
+
+    /* Available Internships */
+    .internship-item {
+      padding: 15px;
+      border: 1px solid #ecf0f1;
+      border-radius: 10px;
+      background: #fcfcfc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .internship-item:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      border-color: #dbe4ff;
+    }
+    .job-details p { margin: 3px 0; font-size: 14px; }
+    .job-details strong { font-size: 16px; color: #34495e; }
+    .job-details span.tag {
+        display: inline-block;
+        background: var(--light-blue);
+        color: var(--primary);
+        font-size: 12px;
+        padding: 2px 8px;
+        border-radius: 5px;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+    .apply-btn {
+      background: var(--primary);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .apply-btn:hover { background: #3a52c7; }
+
+    /* My Applications */
+    #myApplications {
+        grid-area: applications;
+    }
+    #applicationsContent {
+        min-height: 100px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .application-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        transition: background 0.2s;
+    }
+    .application-card:hover {
+        background: #f9f9ff;
+    }
+    .status-tag {
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 13px;
+      min-width: 100px;
+      text-align: center;
+      text-transform: capitalize;
+    }
+    /* Status Coloring */
+    .status-tag.approved { background: #e6f7d9; color: #52c41a; }
+    .status-tag.rejected { background: #fff1f0; color: #f5222d; }
+    .status-tag.pending { background: #fffbe6; color: #faad14; }
+    .status-tag.under-review { background: #e6f7ff; color: #1890ff; }
+    .status-tag.contacted { background: #f0f8ff; color: #3f51b5; }
+    
+    /* Media Queries for Responsiveness */
+    @media (max-width: 1024px) {
+        .container {
+            grid-template-areas:
+                "stats stats"
+                "profile announcements"
+                "jobs jobs"
+                "applications applications";
+            grid-template-columns: 1fr 2fr;
+        }
+        #statsContainer {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (max-width: 600px) {
+        header { padding: 15px 20px; }
+        .container {
+            grid-template-areas:
+                "stats"
+                "profile"
+                "announcements"
+                "jobs"
+                "applications";
+            grid-template-columns: 1fr;
+            padding: 0 15px;
+        }
+        #statsContainer {
+            grid-template-columns: 1fr;
+        }
+        .internship-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .apply-btn { margin-top: 10px; width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PRO LAUNCH</h1>
+    <div class="nav-buttons">
+      <span>Welcome, <strong class="user-name">Student</strong>!</span>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- 1. APPLICATION STATUS COUNTS -->
+    <div id="statsContainer">
+      <div class="stat-card total-stat">
+        <h3>Total Applications</h3>
+        <p id="totalCount">0</p>
+      </div>
+      <div class="stat-card approved-stat">
+        <h3>Approved</h3>
+        <p id="approvedCount">0</p>
+      </div>
+      <div class="stat-card rejected-stat">
+        <h3>Rejected</h3>
+        <p id="rejectedCount">0</p>
+      </div>
+      <div class="stat-card pending-stat">
+        <h3>Pending/Review</h3>
+        <p id="pendingCount">0</p>
+      </div>
+    </div>
+
+    <!-- 2. PROFILE SUMMARY -->
+    <div id="profileSummary" class="section">
+        <h2>My Profile</h2>
+        <i class="fa-solid fa-user-circle"></i>
+        <p class="profile-name">Student Name</p>
+        <small id="studentIDDisplay">Student ID: N/A</small>
+        <small style="color:red; font-weight:600;">User ID: <span id="currentUserId">Loading...</span></small>
+        <a href="profile.html" class="profile-link">
+            <i class="fa-solid fa-pencil-alt"></i> Edit Profile
+        </a>
+    </div>
+
+    <!-- 5. ANNOUNCEMENTS (MOCK DATA) -->
+    <div id="announcementsList" class="section">
+        <h2>Announcements</h2>
+        <div id="announcementsContent">
+            <!-- Announcements will be injected here -->
+        </div>
+    </div>
+
+
+    <!-- 3. POSTED JOBS (Loaded from Firestore) -->
+    <div id="postedJobs" class="section">
+      <h2>Available Internship Postings</h2>
+      <div id="jobsContent">
+        <p class="loading-message">
+          <i class="fas fa-spinner fa-spin"></i> Loading internships...
+        </p>
+        <!-- Dynamic job listings will be injected here by the script -->
+      </div>
+    </div>
+
+    <!-- 4. MY APPLICATIONS (Real-time from Firestore) -->
+    <div id="myApplications" class="section">
+      <h2>My Internship Applications</h2>
+
+      <div id="applicationsContent">
+        <p class="loading-message">
+            <i class="fas fa-spinner fa-spin"></i> Loading your applications...
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, onSnapshot, collection, query, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // --- FIREBASE INITIALIZATION & AUTH ---
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    
+    setLogLevel('debug');
+    let db, auth;
+    let userId = null;
+    let isAuthReady = false;
+
+    try {
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        auth = getAuth(app);
+    } catch (error) {
+        console.error("Firebase initialization error:", error);
+    }
+
+    const jobContainer = document.getElementById('jobsContent');
+    const applicationsContainer = document.getElementById('applicationsContent');
+    const userIdDisplay = document.getElementById('currentUserId');
+
+    // Handle authentication state change
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            userId = user.uid;
+            isAuthReady = true;
+            userIdDisplay.textContent = userId;
+            console.log("Authenticated with UID:", userId);
+            // Once authenticated, start listening for jobs and applications
+            listenForJobs();
+            listenForApplications();
+        } else {
+            console.log("Attempting sign-in...");
+            if (initialAuthToken) {
+                try {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } catch (error) {
+                    console.warn("Custom token failed, signing in anonymously:", error);
+                    await signInAnonymously(auth);
+                }
+            } else {
+                await signInAnonymously(auth);
+            }
+        }
+    });
+
+    // --- FIRESTORE JOB LISTENER (Public Data) ---
+    function listenForJobs() {
+        if (!db) return;
+
+        // Path: /artifacts/{appId}/public/data/internships
+        const internshipsCol = collection(db, `artifacts/${appId}/public/data/internships`);
+        const q = query(internshipsCol); 
+
+        onSnapshot(q, (snapshot) => {
+            const jobs = [];
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                jobs.push({ id: doc.id, ...data });
+            });
+            renderJobs(jobs);
+        }, (error) => {
+            console.error("Error fetching jobs:", error);
+            jobContainer.innerHTML = '<p class="error-message no-jobs">Failed to load jobs. Database error.</p>';
+        });
+    }
+
+    function renderJobs(jobs) {
+        if (jobs.length === 0) {
+            jobContainer.innerHTML = '<p class="no-jobs">No internships have been posted yet. Check back soon!</p>';
+            return;
+        }
+
+        jobContainer.innerHTML = jobs.map(job => `
+            <div class="internship-item">
+                <div class="job-details">
+                    <strong>${job.title || 'Untitled Job'}</strong>
+                    <p>${job.company || 'Unknown Company'} 📍 ${job.location || 'N/A'}</p>
+                    <small>Posted: ${new Date(job.postedAt).toLocaleDateString()}</small>
+                </div>
+                <div>
+                    <span class="tag">${job.category || 'General'}</span>
+                    <a class="apply-btn" 
+                        href="internship.html?id=${job.id}&job=${encodeURIComponent(job.title)}&company=${encodeURIComponent(job.company)}&loc=${encodeURIComponent(job.location)}&ref=${encodeURIComponent(job.refID)}">
+                        Apply Now
+                    </a>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // --- FIRESTORE APPLICATION LISTENER (Private Data) ---
+    function listenForApplications() {
+        if (!db || !userId) {
+            applicationsContainer.innerHTML = '<p class="loading-message">Awaiting user authentication...</p>';
+            return;
+        }
+        
+        // Private collection path: /artifacts/{appId}/users/{userId}/applications
+        const applicationsCol = collection(db, `artifacts/${appId}/users/${userId}/applications`);
+        const q = query(applicationsCol); 
+
+        onSnapshot(q, (snapshot) => {
+            const applications = [];
+            let approved = 0;
+            let rejected = 0;
+            let pending = 0;
+            
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                applications.push({ id: doc.id, ...data });
+                
+                // Count statuses for stats
+                const status = data.status || 'pending';
+                if (status === 'approved') approved++;
+                else if (status === 'rejected') rejected++;
+                else pending++; // Counting all others (pending, under-review, contacted) as pending/review
+            });
+            
+            renderApplications(applications);
+            updateApplicationStats(applications.length, approved, rejected, pending);
+            
+        }, (error) => {
+            console.error("Error fetching applications:", error);
+            applicationsContainer.innerHTML = '<p class="no-jobs" style="color:#e74c3c;"><i class="fas fa-exclamation-circle"></i> Failed to load applications. Check console.</p>';
+            updateApplicationStats(0, 0, 0, 0);
+        });
+    }
+
+    function renderApplications(applications) {
+        if (applications.length === 0) {
+            applicationsContainer.innerHTML = '<p class="no-jobs" style="color:var(--gray-text);">You haven\'t applied for any internships yet.</p>';
+            return;
+        }
+
+        applicationsContainer.innerHTML = applications.map(app => `
+            <div class="application-card">
+                <div class="internship-info">
+                    <p><strong>${app.jobTitle || 'Unknown Job'}</strong></p>
+                    <p>${app.company || 'Unknown Company'}</p>
+                    <small>Applied: ${new Date(app.appliedAt).toLocaleDateString()}</small>
+                    <small style="color: var(--primary);">ID: ${app.internshipId.substring(0, 8)}...</small>
+                </div>
+                <div>
+                    <span class="status-tag ${app.status || 'pending'}">
+                        ${app.status ? app.status.replace('-', ' ') : 'Pending'}
+                    </span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function updateApplicationStats(total, approved, rejected, pending) {
+      document.getElementById('totalCount').textContent = total;
+      document.getElementById('approvedCount').textContent = approved;
+      document.getElementById('rejectedCount').textContent = rejected;
+      document.getElementById('pendingCount').textContent = pending;
+    }
+
+
+    // --- ANNOUNCEMENTS (MOCK) ---
+    function renderAnnouncements() {
+        const announcements = [
+            { title: "Internship Fair Date Confirmed", date: "Oct 25, 2025", text: "The annual internship fair will be held on Nov 10th. Register by next week!" },
+            { title: "Mandatory Orientation Session", date: "Oct 20, 2025", text: "All new interns must attend the virtual orientation on Friday at 9 AM." },
+        ];
+
+        const container = document.getElementById('announcementsContent');
+        container.innerHTML = announcements.map(announcement => `
+            <div class="announcement-item">
+                <strong>${announcement.title}</strong>
+                ${announcement.text}
+                <small>— Posted on ${announcement.date}</small>
+            </div>
+        `).join('');
+
+        if (announcements.length === 0) {
+            container.innerHTML = '<p style="color: #95a5a6;">No new announcements at this time.</p>';
+        }
+    }
+
+
+    // --- GENERAL AUTH AND ROUTING ---
+    (function () {
+        const role = localStorage.getItem("role");
+        const username = localStorage.getItem("username") || "Student";
+        const page = location.pathname.split("/").pop();
+      
+        if (!role) {
+            location.href = "login.html";
+            return;
+        }
+      
+        if (page === "dashboard.html" && !["student", "admin"].includes(role)) {
+            location.href = "login.html";
+            return;
+        }
+      
+        document.querySelectorAll(".user-name, .profile-name").forEach(el => el.textContent = username);
+      
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                localStorage.removeItem("role");
+                localStorage.removeItem("username");
+                location.href = "login.html";
+            }).catch((error) => {
+                console.error("Logout failed:", error);
+            });
+        });
+
+        // Load profile ID from localStorage
+        const users = JSON.parse(localStorage.getItem('proLaunchUsers') || '[]');
+        const currentUser = users.find(user => user.email === localStorage.getItem('username') && user.role === 'student');
+
+        if (currentUser && currentUser.studentID) {
+            document.getElementById('studentIDDisplay').textContent = `Student ID: ${currentUser.studentID}`;
+        }
+    })();
+
+    window.onload = function() {
+      renderAnnouncements();
+    };
+
+  </script>
+</body>
+</html>
