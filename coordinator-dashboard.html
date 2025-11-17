@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coordinator Portal - Dashboard</title>
+
+  <!-- Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --uoc-main: #0c1b3c;
+      --uoc-accent: #3b82f6;
+      --uoc-text: #1f2937;
+      --uoc-bg: #ffffff;
+      --hero-bg: #071433;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--uoc-bg);
+      color: var(--uoc-text);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: white;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      border-bottom: 1px solid #e5e7eb;
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      color: var(--uoc-main);
+      font-size: 1.1rem;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      margin-right: 0.75rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    nav {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      font-weight: 600;
+      color: var(--uoc-main);
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .nav-link:hover {
+      color: var(--uoc-accent);
+    }
+
+    .nav-link.active {
+      background: var(--uoc-main);
+      color: white;
+    }
+
+    /* Cards */
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+      margin-bottom: 1.5rem;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      text-align: center;
+    }
+
+    .stat-card i {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 0.75rem;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--uoc-main);
+    }
+
+    .stat-label {
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
+    /* Forms & Inputs */
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      font: inherit;
+      margin-top: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--uoc-accent);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--uoc-text);
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--uoc-main) 0%, var(--uoc-accent) 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      transform: translateY(-2px);
+    }
+
+    /* Hero banner matching home page colors */
+    .hero {
+      background: linear-gradient(180deg, var(--hero-bg) 0%, #0b2546 100%);
+      color: white;
+      padding: 3.5rem 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hero .hero-content h1 {
+      font-size: 2.25rem;
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero .hero-content p {
+      color: rgba(255,255,255,0.85);
+      max-width: 650px;
+      margin-bottom: 1rem;
+    }
+
+    .hero .cta {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn-secondary {
+      background: #f3f4f6;
+      color: var(--uoc-text);
+    }
+
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #f9fafb;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    tr:hover {
+      background: #f9fafb;
+    }
+
+    /* Badges */
+    .badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .badge-green {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .badge-orange {
+      background: #fed7aa;
+      color: #9a3412;
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .filters {
+        flex-direction: row;
+      }
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #9ca3af;
+    }
+
+    .empty-state i {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-inner">
+      <a href="#" class="logo">
+        <img src="images/uni logo.png" alt="uni logo">
+        Coordinator Portal
+      </a>
+      <nav>
+        <a href="coordinator-dashboard.html" class="nav-link active">Dashboard</a>
+        <a href="create-announcement.html" class="nav-link">Create Announcement</a>
+        <a href="applications.html" class="nav-link">Applications</a>
+        <a href="student-management.html" class="nav-link">Student Management</a>
+        <a href="profile-settings.html" class="nav-link">Profile Settings</a>
+        <a href="#" class="nav-link" style="color: #dc2626;">Logout</a>
+      </nav>
+      <button class="mobile-menu-btn">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container py-8">
+
+    <!-- Hero (home page style) -->
+    <div class="hero">
+      <div class="hero-content">
+        <h1>Coordinator Dashboard</h1>
+        <p>The official centralized platform for academic monitoring, industry placement management, and structured internship assessment. Manage announcements, applications and student lists here.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="create-announcement.html">Create Announcement</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="images\DSC_00841-scaled.jpg" alt="students" style="width:320px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.2);">
+      </div>
+    </div>
+
+    <!-- Page Title -->
+    <div class="card">
+      <h1 class="text-2xl font-bold" style="color: var(--uoc-main);">Dashboard Overview</h1>
+      <p class="text-gray-600 mt-1">View key statistics and manage student information</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="card stat-card">
+        <i data-lucide="users" style="color: var(--uoc-accent);"></i>
+        <div class="stat-number">152</div>
+        <div class="stat-label">Total Students</div>
+      </div>
+      <div class="card stat-card">
+        <i data-lucide="briefcase" style="color: #16a34a;"></i>
+        <div class="stat-number">48</div>
+        <div class="stat-label">With Internships</div>
+      </div>
+      <div class="card stat-card">
+        <i data-lucide="user-x" style="color: #ea580c;"></i>
+        <div class="stat-number">104</div>
+        <div class="stat-label">Without Internships</div>
+      </div>
+    </div>
+
+    <!-- Applications Panel -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
+        <div>
+          <h2 class="text-xl font-bold" style="color: var(--uoc-main);">Applications</h2>
+          <p style="color:#6b7280;margin-top:4px;">View and manage internship applications received from students.</p>
+        </div>
+        <div style="display:flex;gap:0.5rem;align-items:center;">
+          <div style="font-weight:700;color:var(--uoc-main);">Applicants: <span id="applicationsCount">0</span></div>
+          <button class="btn btn-secondary" onclick="downloadApplicationsCSV()">Download CSV</button>
+        </div>
+      </div>
+
+      <div style="overflow-x:auto;margin-top:1rem;">
+        <table id="applicationsTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Student ID</th>
+              <th>Email</th>
+              <th>Year</th>
+              <th>Announcement</th>
+              <th>Applied At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Student Management -->
+    <div class="card">
+      <h2 class="text-xl font-bold mb-4" style="color: var(--uoc-main);">Student Management</h2>
+
+      <!-- Upload 3rd Year Student List -->
+      <div style="margin-bottom:1rem;display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">
+        <label style="font-weight:600;min-width:220px;">Upload 3rd Year Student List (CSV)</label>
+        <input type="file" id="studentCsv" accept=".csv" />
+        <button class="btn btn-primary" onclick="handleStudentCSVUpload()">Upload & Import</button>
+        <small style="color:#6b7280;display:block;width:100%;">CSV columns: Name,StudentID,Email,Year — students with Year=3 will be eligible to login.</small>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters">
+        <div style="flex: 1;">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by name, ID, or email..."
+            onkeyup="filterTable()"
+          >
+        </div>
+        <div style="min-width: 150px;">
+          <select id="yearFilter" onchange="filterTable()">
+            <option value="">All Years</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div style="overflow-x: auto; margin-top: 1rem;">
+        <table id="studentTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Student ID</th>
+              <th>Email</th>
+              <th>Year</th>
+              <th>Internship Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Nimal Perera</td>
+              <td>2020ICT045</td>
+              <td>nimal@cmb.ac.lk</td>
+              <td>3</td>
+              <td><span class="badge badge-green">With Internship</span></td>
+              <td>
+                <button class="text-sm font-medium" style="color: var(--uoc-accent);">View Profile</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Kasun Silva</td>
+              <td>2020ICT078</td>
+              <td>kasun@cmb.ac.lk</td>
+              <td>3</td>
+              <td><span class="badge badge-orange">Without Internship</span></td>
+              <td>
+                <button class="text-sm font-medium" style="color: var(--uoc-accent);">View Profile</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Ayesha Fernando</td>
+              <td>2021ICT012</td>
+              <td>ayesha@cmb.ac.lk</td>
+              <td>4</td>
+              <td><span class="badge badge-green">With Internship</span></td>
+              <td>
+                <button class="text-sm font-medium" style="color: var(--uoc-accent);">View Profile</button>
+              </td>
+            </tr>
+            <!-- More rows can be added -->
+          </tbody>
+        </table>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+          <i data-lucide="search"></i>
+          <p>No students found matching your filters</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Application Detail Modal (simple) -->
+  <div id="appModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;z-index:200;">
+    <div style="background:white;border-radius:12px;max-width:720px;width:96%;padding:1.25rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h3 id="modalTitle" style="margin:0;color:var(--uoc-main);">Application Detail</h3>
+        <button onclick="closeAppModal()" class="btn btn-secondary">Close</button>
+      </div>
+      <div id="modalBody" style="margin-top:1rem;color:#374151;">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    lucide.createIcons();
+
+    // Sample applications data (in real app this comes from backend)
+    const applications = [
+      {name: 'Kasun Silva', studentId: '2020ICT078', email: 'kasun@cmb.ac.lk', year: '3', announcement: 'ABC Ltd - Developer (2)', appliedAt: '2025-11-10', resume: '#'},
+      {name: 'Ayesha Fernando', studentId: '2021ICT012', email: 'ayesha@cmb.ac.lk', year: '4', announcement: 'XYZ Pvt - Tester (1)', appliedAt: '2025-11-11', resume: '#'}
+    ];
+
+    function renderApplications() {
+      const tbody = document.querySelector('#applicationsTable tbody');
+      tbody.innerHTML = '';
+      applications.forEach((app, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${idx+1}</td>
+          <td>${escapeHtml(app.name)}</td>
+          <td>${escapeHtml(app.studentId)}</td>
+          <td>${escapeHtml(app.email)}</td>
+          <td>${escapeHtml(app.year)}</td>
+          <td>${escapeHtml(app.announcement)}</td>
+          <td>${escapeHtml(app.appliedAt)}</td>
+          <td>
+            <button class="btn btn-secondary" onclick="openApplication(${idx})">Open</button>
+            <button class="btn btn-secondary" onclick="downloadSingleApplication(${idx})">Download</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('applicationsCount').textContent = applications.length;
+    }
+
+    function openApplication(index) {
+      const app = applications[index];
+      const body = document.getElementById('modalBody');
+      body.innerHTML = `
+        <p><strong>Name:</strong> ${escapeHtml(app.name)}</p>
+        <p><strong>Student ID:</strong> ${escapeHtml(app.studentId)}</p>
+        <p><strong>Email:</strong> <a href="mailto:${encodeURIComponent(app.email)}">${escapeHtml(app.email)}</a></p>
+        <p><strong>Year:</strong> ${escapeHtml(app.year)}</p>
+        <p><strong>Announcement:</strong> ${escapeHtml(app.announcement)}</p>
+        <p><strong>Applied At:</strong> ${escapeHtml(app.appliedAt)}</p>
+        <p><strong>Resume:</strong> <a href="${app.resume}" target="_blank">Download</a></p>
+      `;
+      document.getElementById('appModal').style.display = 'flex';
+    }
+
+    function closeAppModal() {
+      document.getElementById('appModal').style.display = 'none';
+    }
+
+    function downloadApplicationsCSV() {
+      if (applications.length === 0) return alert('No applications to download');
+      const rows = [ ['Name','StudentID','Email','Year','Announcement','AppliedAt'] ];
+      applications.forEach(a => rows.push([a.name,a.studentId,a.email,a.year,a.announcement,a.appliedAt]));
+      const csv = rows.map(r => r.map(cell => '"'+String(cell).replace(/"/g,'""')+'"').join(',')).join('\n');
+      const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'applications.csv';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadSingleApplication(idx) {
+      const a = applications[idx];
+      const csv = ['Name,StudentID,Email,Year,Announcement,AppliedAt', `${a.name},${a.studentId},${a.email},${a.year},${a.announcement},${a.appliedAt}`].join('\n');
+      const blob = new Blob([csv], {type: 'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${a.studentId}_application.csv`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function shareApplicationsByEmail() {
+      // Because attaching files via mailto is not supported, we create the CSV and tell the coordinator to attach it.
+      if (applications.length === 0) return alert('No applications to share');
+      const company = prompt('Enter company email to send to (or leave blank to copy body):');
+      // prepare a short summary body
+      const bodyLines = ['Attached is the list of selected internship applicants from the department.\n', 'Applicants:'];
+      applications.forEach(a => bodyLines.push(`- ${a.name} (${a.studentId}) — ${a.email}`));
+      bodyLines.push('\nPlease find the full CSV attached.');
+      const body = encodeURIComponent(bodyLines.join('\n'));
+      const subject = encodeURIComponent('Internship Applicants - Department of ICT');
+      let mailto = 'mailto:' + (company?encodeURIComponent(company):'') + '?subject=' + subject + '&body=' + body;
+      window.location.href = mailto;
+      // Also trigger the CSV download so the coordinator can attach it to the email client
+      setTimeout(downloadApplicationsCSV, 500);
+    }
+
+    // Utility: escape HTML
+    function escapeHtml(str){
+      if (!str && str !== 0) return '';
+      return String(str).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[m]; });
+    }
+
+    // Student CSV upload parsing and adding to student table
+    function handleStudentCSVUpload() {
+      const input = document.getElementById('studentCsv');
+      if (!input.files || !input.files[0]) return alert('Select a CSV file first');
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e){
+        const text = e.target.result;
+        parseAndInsertStudentsFromCSV(text);
+        input.value = '';
+        alert('CSV processed. 3rd year students were added to the table and can be marked as eligible.');
+      };
+      reader.readAsText(file, 'UTF-8');
+    }
+
+    function parseAndInsertStudentsFromCSV(csvText){
+      const lines = csvText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length>0);
+      if (lines.length === 0) return;
+      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+      const idxName = headers.indexOf('name');
+      const idxId = headers.indexOf('studentid');
+      const idxEmail = headers.indexOf('email');
+      const idxYear = headers.indexOf('year');
+      for (let i=1;i<lines.length;i++){
+        const cols = lines[i].split(',').map(c => c.trim());
+        const name = cols[idxName] || cols[0] || '';
+        const sid = cols[idxId] || cols[1] || '';
+        const email = cols[idxEmail] || cols[2] || '';
+        const year = cols[idxYear] || cols[3] || '';
+        addStudentRow(name, sid, email, year);
+      }
+      filterTable();
+    }
+
+    function addStudentRow(name, sid, email, year) {
+      const tbody = document.querySelector('#studentTable tbody');
+      const tr = document.createElement('tr');
+      const status = (String(year).trim() === '3') ? '<span class="badge badge-green">Eligible (3rd Yr)</span>' : '<span class="badge badge-orange">Not Eligible</span>';
+      tr.innerHTML = `
+        <td>${escapeHtml(name)}</td>
+        <td>${escapeHtml(sid)}</td>
+        <td>${escapeHtml(email)}</td>
+        <td>${escapeHtml(year)}</td>
+        <td>${status}</td>
+        <td><button class="text-sm font-medium" style="color: var(--uoc-accent);">View Profile</button></td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    // Reuse filterTable but make robust if elements missing
+    function filterTable() {
+      const searchEl = document.getElementById('searchInput');
+      const yearEl = document.getElementById('yearFilter');
+      const search = searchEl ? searchEl.value.toLowerCase() : '';
+      const year = yearEl ? yearEl.value : '';
+      const rows = document.querySelectorAll('#studentTable tbody tr');
+      const emptyState = document.getElementById('emptyState');
+      let visible = 0;
+
+      rows.forEach(row => {
+        const cells = row.cells;
+        const name = (cells[0] && cells[0].textContent || '').toLowerCase();
+        const id = (cells[1] && cells[1].textContent || '').toLowerCase();
+        const email = (cells[2] && cells[2].textContent || '').toLowerCase();
+        const rowYear = (cells[3] && cells[3].textContent || '');
+
+        const matchesSearch = name.includes(search) || id.includes(search) || email.includes(search);
+        const matchesYear = !year || rowYear === year;
+
+        if (matchesSearch && matchesYear) {
+          row.style.display = '';
+          visible++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      if (emptyState) emptyState.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    // initial render
+    renderApplications();
+    filterTable();
+  </script>
+
+</body>
+</html>
