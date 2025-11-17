@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Management - Coordinator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root{--uoc-main:#0c1b3c;--uoc-accent:#3b82f6;--uoc-text:#1f2937}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#fff;color:var(--uoc-text);line-height:1.6}
+    a{text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:1rem}
+    header{position:sticky;top:0;background:white;box-shadow:0 10px 20px rgba(0,0,0,0.05);border-bottom:1px solid #e5e7eb;z-index:100}
+    .header-inner{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+    .logo{display:flex;align-items:center;font-weight:700;color:var(--uoc-main);font-size:1.1rem}
+    .logo img{width:40px;height:40px;margin-right:0.75rem;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+    nav{display:flex;gap:0.5rem;flex-wrap:wrap}
+    .nav-link{padding:0.6rem 1rem;border-radius:999px;font-weight:600;color:var(--uoc-main);transition:all 0.2s;font-size:0.95rem}
+    .nav-link:hover{color:var(--uoc-accent)}
+    .nav-link.active{background:var(--uoc-main);color:#fff}
+    .card{background:#fff;padding:1.25rem;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.05);margin-top:1rem}
+    table{width:100%;border-collapse:collapse;margin-top:1rem}
+    th,td{padding:0.6rem;border-bottom:1px solid #eee;text-align:left}
+    .btn{padding:0.5rem 0.8rem;border-radius:8px;border:none}
+    .btn-primary{background:linear-gradient(90deg,var(--uoc-main),var(--uoc-accent));color:#fff}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="coordinator-dashboard.html" class="logo"><img src="images/uni logo.png" alt="logo" style="width:40px;height:40px;border-radius:8px">Coordinator Portal</a>
+      <nav>
+        <a href="coordinator-dashboard.html" class="nav-link">Dashboard</a>
+        <a href="create-announcement.html" class="nav-link">Create Announcement</a>
+        <a href="applications.html" class="nav-link">Applications</a>
+        <a href="student-management.html" class="nav-link active">Student Management</a>
+        <a href="profile-settings.html" class="nav-link">Profile Settings</a>
+        <a href="site-preferences.html" class="nav-link">Site Preferences</a>
+        <a href="#" class="nav-link" style="color:#dc2626">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h1 style="color:var(--uoc-main);margin-bottom:0.25rem">Student Management</h1>
+      <p style="color:#6b7280;margin-top:0">Search, filter and import student lists (CSV). Only uploaded 3rd-year students are eligible to apply.</p>
+      <div style="margin-top:1rem">
+        <label style="font-weight:700;">Upload CSV (Name,StudentID,Email,Year)</label>
+        <input type="file" accept=".csv" style="display:block;margin-top:0.5rem" />
+      </div>
+      <div style="overflow-x:auto;margin-top:1rem">
+        <table>
+          <thead><tr><th>Name</th><th>Student ID</th><th>Email</th><th>Year</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Nimal Perera</td><td>2020ICT045</td><td>nimal@cmb.ac.lk</td><td>3</td><td>Eligible (3rd Yr)</td></tr>
+            <tr><td>Kasun Silva</td><td>2020ICT078</td><td>kasun@cmb.ac.lk</td><td>3</td><td>Eligible (3rd Yr)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
