@@ -1,478 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Apply for Internship</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* General Reset & Variables */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    :root {
-      --primary: #7a3ff5;
-      --accent: #3f8ef5;
-      --bg-light: #f5f5ff;
-      --card-bg: #ffffff;
-      --text-dark: #222;
-      --text-gray: #6c757d;
-      --success: #4caf50;
-      --error: #f44336;
-      --shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-      --radius: 14px;
-    }
-    body {
-      background: var(--bg-light);
-      color: var(--text-dark);
-      line-height: 1.6;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apply for Internship - UoC FoT ICT Internship System</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
 
-    /* Header & Navigation */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 30px;
-      background: var(--card-bg);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-    }
-    header h1 { 
-      color: var(--primary); 
-      margin: 0; 
-      font-size: 20px; 
-    }
-    .back-link {
-      text-decoration: none;
-      color: var(--text-dark);
-      padding: 8px 12px;
-      border-radius: 8px;
-      background: #f0f0ff;
-      font-weight: 500;
-      transition: background 0.3s;
-    }
-    .back-link:hover {
-      background: #e0e0ff;
-    }
+    <style>
+      /* --- REUSED STYLES from Dashboard for consistency --- */
+      :root {
+        --uoc-main: #0c1b3c; /* Deep Navy/Official UoC Dark Blue */
+        --uoc-accent: #3b82f6; /* Light Blue (Highlight) */
+        --uoc-bg: #f5f7fa; /* Very Light Gray Background */
+        --uoc-text: #1f2937; /* Dark Gray for main text */
+        --color-green: #10b981;
+        --color-yellow: #f59e0b;
+      }
 
-    /* Main Content Layout */
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 0 15px;
-    }
-    .application-container {
-      background: var(--card-bg);
-      padding: 30px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    h2 {
-      color: var(--primary);
-      margin-bottom: 5px;
-      font-size: 26px;
-    }
-    .job-title-info {
-        margin-bottom: 25px;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 15px;
-    }
-    .job-title-info p {
-        color: var(--text-gray);
-        font-size: 16px;
-    }
-    
-    /* Form Section */
-    .form-section {
-        margin-top: 25px;
-    }
-    .form-section h3 {
-        color: var(--text-dark);
-        font-size: 20px;
-        border-bottom: 2px solid var(--accent);
-        display: inline-block;
-        padding-bottom: 5px;
-        margin-bottom: 20px;
-    }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--uoc-bg);
+        color: var(--uoc-text);
+        margin: 0;
+        padding: 0;
+      }
 
-    /* Form Elements */
-    .form-group {
-      margin-bottom: 20px;
-    }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #333;
-    }
-    input[type="text"], 
-    input[type="email"], 
-    input[type="tel"],
-    textarea, 
-    select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-      transition: border-color 0.3s;
-    }
-    input:disabled, textarea:disabled {
-        background-color: #f8f8f8;
-        color: #888;
-    }
-    input:focus, textarea:focus, select:focus {
-      border-color: var(--primary);
-      outline: none;
-      box-shadow: 0 0 5px rgba(122, 63, 245, 0.2);
-    }
-    textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-    .required-info {
-        font-size: 14px;
-        color: var(--text-gray);
-        margin-top: -10px;
-        margin-bottom: 15px;
-        display: block;
-    }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
 
-    /* CV/Profile Alert Box */
-    .profile-status {
-        padding: 15px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        font-weight: 500;
+      /* Header Styling (Reused) */
+      .header {
+        position: sticky;
+        top: 0;
+        background-color: white;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        z-index: 50;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+
+      .logo-link {
         display: flex;
         align-items: center;
-        gap: 10px;
-    }
-    .status-ok {
-        background-color: #e6f7e9; /* Light green */
-        color: var(--success);
-        border: 1px solid var(--success);
-    }
-    .status-warning {
-        background-color: #fff3e6; /* Light orange */
-        color: var(--warning);
-        border: 1px solid #f97316;
-    }
-    .status-warning a {
-        color: #f97316;
-        text-decoration: underline;
-    }
-    
-    /* Submit Button */
-    button[type="submit"] {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      margin-top: 30px;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.3s;
-    }
-    button[type="submit"]:hover:not(:disabled) {
-      opacity: 0.9;
-    }
-    button[type="submit"]:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-    }
-    
-    /* Message Boxes */
-    #successBox, #errorBox {
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
-      font-weight: 600;
-      text-align: center;
-      display: none;
-    }
-    #successBox {
-      background-color: #e6f7e9;
-      color: var(--success);
-      border: 1px solid var(--success);
-    }
-    #errorBox {
-      background-color: #fcebeb;
-      color: var(--error);
-      border: 1px solid var(--error);
-    }
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--uoc-main);
+        line-height: 1.2;
+      }
 
-    /* Responsive adjustments */
-    @media (max-width: 600px) {
-      header {
-        padding: 15px 15px;
+      .logo-img {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.5rem;
+        margin-right: 0.75rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
       }
-      main {
-        margin: 20px 0;
+
+      .logout-button, .back-button {
+        padding: 0.5rem 1.25rem;
+        background-color: var(--uoc-main);
+        color: white;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        text-decoration: none;
+        transition: background-color 0.3s;
+        border: none;
+        cursor: pointer;
       }
-      .application-container {
-        padding: 20px;
-        border-radius: 0;
+
+      .logout-button:hover, .back-button:hover {
+        background-color: var(--uoc-accent);
       }
+
+      /* Main Content Styling */
+      .py-10 {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+      }
+
+      .mb-6 {
+        margin-bottom: 1.5rem;
+      }
+
+      h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        color: var(--uoc-main);
+        margin-bottom: 0.5rem;
+      }
+      
       h2 {
-        font-size: 22px;
+        font-size: 1.875rem; 
+        font-weight: 800; 
+        color: var(--uoc-main);
       }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1><i class="fas fa-briefcase"></i> Apply Internship</h1>
-    <a href="dashboard.html" class="back-link">
-      <i class="fas fa-arrow-left"></i> Back to Dashboard
-    </a>
-  </header>
 
-  <main>
-    <div class="application-container">
-        
-        <div class="job-title-info">
-            <h2 id="jobTitle">Job Title Placeholder</h2>
-            <p id="jobMeta">Company • Location • Reference</p>
+      .text-lg {
+        font-size: 1.125rem;
+      }
+      .text-gray-600 {
+        color: #4b5563;
+      }
+      .text-gray-500 {
+        color: #6b7280;
+      }
+
+      /* --- NEW APPLICATION FORM STYLES --- */
+      .application-form-card {
+        background-color: white;
+        padding: 2.5rem; /* p-10 */
+        border-radius: 1rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border-left: 8px solid var(--uoc-accent);
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--uoc-main);
+      }
+
+      .form-group input[type="text"],
+      .form-group input[type="email"],
+      .form-group input[type="file"],
+      .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db; /* border-gray-300 */
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        box-sizing: border-box; /* Include padding in the element's total width and height */
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      .form-group input[type="text"]:focus,
+      .form-group input[type="email"]:focus,
+      .form-group input[type="file"]:focus,
+      .form-group textarea:focus {
+        border-color: var(--uoc-accent);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* ring-4 ring-blue-300 */
+      }
+      
+      .form-group input[type="file"] {
+          padding-top: 1rem; /* Adjust padding for file input */
+          padding-bottom: 1rem;
+          background-color: var(--uoc-bg);
+          cursor: pointer;
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .submit-button {
+        padding: 0.75rem 2rem;
+        background-color: var(--color-green);
+        color: white;
+        border-radius: 0.5rem;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+      }
+      
+      .submit-button:hover {
+        background-color: #059669; /* Darker Green */
+      }
+      
+      .text-red-500 {
+          color: #ef4444; /* Standard Red */
+      }
+    </style>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+      });
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="container header-content">
+        <div class="logo-link">
+          <img
+            src="./images/uni logo.png"
+            class="logo-img"
+            alt="UoC FoT Logo"
+          />
+          University of Colombo <br />
+          Faculty of Technology <br />
+          Dept. of ICT
+        </div>
+        <div style="display: flex; gap: 1rem;">
+            <a href="studentdashboard.html" class="back-button" style="background-color: #6b7280;"> 
+                <i data-lucide="arrow-left" style="width: 1rem; height: 1rem; display: inline-block; vertical-align: middle;"></i>
+                Back to Dashboard 
+            </a>
+            <a href="index.html" class="logout-button"> Logout </a>
         </div>
+      </div>
+    </header>
 
-        <form id="applyForm">
-            
-            <!-- CV/Profile Status Check -->
-            <div id="profileStatus" class="profile-status status-warning">
-                <i class="fas fa-spinner fa-spin"></i> Loading profile data...
-            </div>
+    <div class="container py-10">
+      <div class="mb-6" style="max-width: 800px; margin: 0 auto 2.5rem;">
+        <h1>Apply for Internship</h1>
+        <p class="text-gray-600 text-lg">
+         
+        </p>
+      </div>
 
-            <div class="form-section">
-                <h3>1. Personal Information (Pre-filled from Profile)</h3>
+      <div class="application-form-card">
+        <form action="/submit-application" method="POST" enctype="multipart/form-data"> 
+          
+          <div style="text-align: right; margin-bottom: 2rem;">
+            <p class="text-sm text-red-500">* Required Fields</p>
+          </div>
+          
+          <input type="hidden" name="internship_id" value="[INTERNSHIP_ID_HERE]"> 
+          
+          <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Personal Information</h2>
 
-                <!-- Full Name -->
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" name="fullName" disabled placeholder="Load your profile first" required>
-                </div>
+          <div class="form-group">
+            <label for="email"> Full name <span class="text-red-500">*</span></label>
+            <input type="text" id="name" name="name"  style="background-color: var(--uoc-bg); cursor: not-allowed;" />
+          </div>
 
-                <!-- Email -->
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" disabled placeholder="Load your profile first" required>
-                </div>
-                
-                <!-- Phone Number (Editable, as it might change or not be in profile) -->
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" placeholder="Enter your contact phone number (e.g., +94 77 XXXXXXX)" required>
-                </div>
-            </div>
+          <div class="form-group">
+            <label for="student_id">Registration Number <span class="text-red-500">*</span></label>
+            <input type="text" id="student_id" name="student_id"  style="background-color: var(--uoc-bg); cursor: not-allowed;" />
+          </div>
 
-            <div class="form-section">
-                <h3>2. Academic & Experience Details (Read-Only)</h3>
-                <span class="required-info">These details are taken from your latest <a href="profile.html">Profile Settings</a>.</span>
+          <div class="form-group">
+            <label for="email">UoC Email Address <span class="text-red-500">*</span></label>
+            <input type="email" id="email" name="email"  style="background-color: var(--uoc-bg); cursor: not-allowed;" />
+          </div>
 
-                <!-- Department & Degree -->
-                <div class="form-group">
-                    <label for="department">Department & Degree</label>
-                    <input type="text" id="department" name="department" disabled value="N/A" required>
-                </div>
-                
-                <!-- Skills -->
-                <div class="form-group">
-                    <label for="skills">Key Skills</label>
-                    <textarea id="skills" name="skills" rows="3" disabled>N/A</textarea>
-                </div>
+          <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 2rem 0;" />
+          
+          <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Application Documents</h2>
 
-                <!-- Projects -->
-                <div class="form-group">
-                    <label for="projects">Projects Summary</label>
-                    <textarea id="projects" name="projects" rows="4" disabled>N/A</textarea>
-                </div>
-            </div>
+          <div class="form-group">
+            <label for="cv_file">Upload Your CV (PDF only) <span class="text-red-500">*</span></label>
+            <input type="file" id="cv_file" name="cv_file" accept=".pdf" required />
+            <p class="text-sm text-gray-500" style="margin-top: 0.25rem;">Max file size: 5MB. Must be a PDF document.</p>
+          </div>
 
-            <div class="form-section">
-                <h3>3. Application Documents</h3>
-                <span class="required-info">Your CV is automatically attached from your profile.</span>
-                
-                <!-- CV Status -->
-                <div class="form-group">
-                    <label>Attached CV</label>
-                    <div id="cvAttachmentStatus" class="profile-status status-warning">
-                        <i class="fas fa-exclamation-circle"></i> CV not attached. Update your profile!
-                    </div>
-                </div>
+          <div class="form-group">
+            <label for="cover_letter_file">Upload Cover Letter (Optional, PDF only)</label>
+            <input type="file" id="cover_letter_file" name="cover_letter_file" accept=".pdf" />
+            <p class="text-sm text-gray-500" style="margin-top: 0.25rem;">Optional, but highly recommended.</p>
+          </div>
+          
+          <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 2rem 0;" />
+          
+          <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Additional Information</h2>
 
-                <!-- Cover Letter -->
-                <div class="form-group">
-                    <label for="cover">Cover Letter / Statement of Interest</label>
-                    <textarea id="cover" name="cover" rows="8" placeholder="Write a brief cover letter (max 500 words) explaining why you are the best candidate for this role and what you hope to achieve." required></textarea>
-                </div>
-            </div>
-            
-            <button type="submit" id="submitBtn" disabled>
-                <i class="fas fa-paper-plane"></i> Submit Application
+          <div class="form-group">
+            <label for="message">Message to the Company (Max 500 characters)</label>
+            <textarea id="message" name="message" rows="4" maxlength="500" placeholder="Briefly state your motivation and why you are a good fit..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="submit-button">
+                <i data-lucide="send" style="width: 1rem; height: 1rem; display: inline-block; vertical-align: middle; margin-right: 0.25rem;"></i>
+                Submit Application
             </button>
-            
-            <div id="successBox">Application submitted successfully! Redirecting to dashboard...</div>
-            <div id="errorBox">Submission failed. Please check your network connection and try again.</div>
-            
+          </div>
         </form>
+      </div>
     </div>
-  </main>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const form = document.getElementById('applyForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const profileStatusDiv = document.getElementById('profileStatus');
-        const cvAttachmentStatusDiv = document.getElementById('cvAttachmentStatus');
-
-        // --- 1. Get Internship Details from URL ---
-        const job = urlParams.get('job') || 'Internship Position';
-        const company = urlParams.get('company') || 'Unknown Company';
-        const loc = urlParams.get('loc') || 'Remote';
-        const ref = urlParams.get('ref') || 'REF-0000';
-        
-        document.getElementById('jobTitle').textContent = job;
-        document.getElementById('jobMeta').textContent = `${company} • ${loc} • Ref: ${ref}`;
-
-        // Store current application context
-        const applicationContext = {
-            job, company, loc, ref,
-            posted: urlParams.get('posted') || 'N/A',
-            type: urlParams.get('type') || 'N/A',
-            salary: urlParams.get('salary') || 'N/A',
-            age: urlParams.get('age') || 'N/A',
-        };
-
-        // --- 2. Load Student Profile Data ---
-        let profileData = {};
-        let cvAttached = false;
-
-        const loadProfileAndSetupForm = () => {
-            try {
-                const savedProfile = JSON.parse(localStorage.getItem('studentProfile') || '{}');
-                profileData = savedProfile; // Store for submission
-                
-                let isReady = true;
-                let statusMessage = '';
-                
-                // Check if key personal fields are complete
-                if (!profileData.fullName || !profileData.department || !profileData.degree) {
-                    statusMessage += "Missing required personal details. ";
-                    isReady = false;
-                }
-                
-                // Check CV attachment
-                if (profileData.cvData && profileData.cvName) {
-                    cvAttached = true;
-                    cvAttachmentStatusDiv.classList.remove('status-warning');
-                    cvAttachmentStatusDiv.classList.add('status-ok');
-                    cvAttachmentStatusDiv.innerHTML = `<i class="fas fa-file-pdf"></i> Attached CV: <a href="${profileData.cvData}" target="_blank" class="cv-link" download="${profileData.cvName}">${profileData.cvName}</a>`;
-                } else {
-                    cvAttached = false;
-                    statusMessage += "A PDF CV is mandatory for application. ";
-                    cvAttachmentStatusDiv.classList.remove('status-ok');
-                    cvAttachmentStatusDiv.classList.add('status-warning');
-                    cvAttachmentStatusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> CV not attached. Update your <a href="profile.html">profile</a>!`;
-                }
-
-                // Update Profile Status banner
-                if (isReady && cvAttached) {
-                    profileStatusDiv.classList.remove('status-warning');
-                    profileStatusDiv.classList.add('status-ok');
-                    profileStatusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Profile complete! Ready to submit.`;
-                    submitBtn.disabled = false;
-                } else {
-                    profileStatusDiv.classList.remove('status-ok');
-                    profileStatusDiv.classList.add('status-warning');
-                    profileStatusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Your profile is incomplete: ${statusMessage} Please <a href="profile.html">update your profile</a> to enable submission.`;
-                    submitBtn.disabled = true;
-                }
-
-                // Pre-fill form fields
-                form.fullName.value = profileData.fullName || 'N/A - Update Profile';
-                form.email.value = profileData.email || 'N/A - Update Profile';
-                form.department.value = `${profileData.department || 'N/A'} (${profileData.degree || 'N/A'})`;
-                form.skills.value = profileData.skills || 'No skills listed.';
-                form.projects.value = profileData.projects || 'No projects listed.';
-                
-            } catch (e) {
-                console.error("Error loading profile data:", e);
-                profileStatusDiv.classList.add('status-warning');
-                profileStatusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Failed to load profile data. Please <a href="profile.html">update your profile</a>.`;
-                submitBtn.disabled = true;
-            }
-        };
-
-        // --- 3. Form Submission Handler ---
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const successBox = document.getElementById('successBox');
-            const errorBox = document.getElementById('errorBox');
-            successBox.style.display = 'none';
-            errorBox.style.display = 'none';
-
-            if (submitBtn.disabled) {
-                errorBox.textContent = "Cannot submit: Profile is incomplete or missing CV.";
-                errorBox.style.display = 'block';
-                return;
-            }
-
-            // Collect application data
-            const applicationData = {
-                ...applicationContext, // Internship job details
-                // Student info from the application form (phone is editable)
-                applicantName: form.fullName.value,
-                applicantEmail: form.email.value,
-                applicantPhone: form.phone.value.trim(),
-                coverLetter: form.cover.value.trim(),
-                // Attached profile data (read-only snapshot)
-                studentProfileSnapshot: {
-                    department: profileData.department,
-                    degree: profileData.degree,
-                    skills: profileData.skills,
-                    projects: profileData.projects,
-                    cvName: profileData.cvName,
-                    cvData: profileData.cvData,
-                },
-                status: 'Applied',
-                submittedAt: new Date().toISOString()
-            };
-
-            // DEMO: Save application to local storage (simulating API submission)
-            try {
-                const key = 'pendingApplications';
-                const existing = JSON.parse(localStorage.getItem(key) || '[]');
-                existing.push(applicationData);
-                localStorage.setItem(key, JSON.stringify(existing));
-
-                successBox.style.display = 'block';
-                // Simulate redirect after success
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 2000);
-                
-                // Disable the button to prevent double-submission
-                submitBtn.disabled = true;
-
-            } catch (e) {
-                console.error("Application submission failed:", e);
-                errorBox.textContent = "Submission failed due to a local storage error. Please try again.";
-                errorBox.style.display = 'block';
-            }
-        });
-
-        // Initialize form
-        loadProfileAndSetupForm();
-    });
-  </script>
-</body>
+  </body>
 </html>
