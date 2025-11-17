@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Settings - Coordinator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root{--uoc-main:#0c1b3c;--uoc-accent:#3b82f6;--uoc-text:#1f2937}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#fff;color:var(--uoc-text);line-height:1.6}
+    a{text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:1rem}
+    header{position:sticky;top:0;background:white;box-shadow:0 10px 20px rgba(0,0,0,0.05);border-bottom:1px solid #e5e7eb;z-index:100}
+    .header-inner{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+    .logo{display:flex;align-items:center;font-weight:700;color:var(--uoc-main);font-size:1.1rem}
+    .logo img{width:40px;height:40px;margin-right:0.75rem;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+    nav{display:flex;gap:0.5rem;flex-wrap:wrap}
+    .nav-link{padding:0.6rem 1rem;border-radius:999px;font-weight:600;color:var(--uoc-main);transition:all 0.2s;font-size:0.95rem}
+    .nav-link:hover{color:var(--uoc-accent)}
+    .nav-link.active{background:var(--uoc-main);color:#fff}
+    .card{background:#fff;padding:1.25rem;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.05);margin-top:1rem}
+    .profile-picture{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--uoc-accent)}
+    .picture-upload{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid #e5e7eb}
+    .form-group{margin-bottom:1rem}
+    label{display:block;font-weight:700;margin-bottom:0.5rem;color:var(--uoc-text)}
+    input,textarea,select{width:100%;padding:0.75rem;border-radius:8px;border:1px solid #e5e7eb;font-family:inherit;margin-top:0.25rem}
+    input:focus,textarea:focus,select:focus{outline:none;border-color:var(--uoc-accent);box-shadow:0 0 0 3px rgba(59,130,246,0.1)}
+    .btn{padding:0.6rem 1rem;border-radius:999px;border:none;cursor:pointer;font-weight:600}
+    .btn-primary{background:linear-gradient(90deg,var(--uoc-main),var(--uoc-accent));color:white}
+    .btn-secondary{background:#f3f4f6;color:var(--uoc-text)}
+    .btn:hover{transform:translateY(-2px)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    @media(max-width:768px){.form-row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="coordinator-dashboard.html" class="logo"><img src="images/uni logo.png" alt="logo" style="width:40px;height:40px;border-radius:8px">Coordinator Portal</a>
+      <nav>
+        <a href="coordinator-dashboard.html" class="nav-link">Dashboard</a>
+        <a href="create-announcement.html" class="nav-link">Create Announcement</a>
+        <a href="applications.html" class="nav-link">Applications</a>
+        <a href="student-management.html" class="nav-link">Student Management</a>
+        <a href="profile-settings.html" class="nav-link active">Profile Settings</a>
+        <a href="site-preferences.html" class="nav-link">Site Preferences</a>
+        <a href="#" class="nav-link" style="color:#dc2626">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h1 style="color:var(--uoc-main);margin-bottom:0.25rem">Coordinator Profile</h1>
+      <p style="color:#6b7280;margin-top:0">Manage your profile information and picture.</p>
+
+      <!-- Profile Picture Section -->
+      <div class="picture-upload">
+        <div style="display:flex;align-items:flex-start;gap:2rem;flex-wrap:wrap">
+          <div>
+            <img id="profilePicPreview" src="https://via.placeholder.com/120?text=Photo" alt="Profile" class="profile-picture" />
+            <label style="display:block;margin-bottom:0.5rem;font-weight:700">Change Picture</label>
+            <input type="file" id="profilePic" accept="image/*" onchange="previewProfilePic()" style="display:block" />
+            <small style="color:#6b7280;display:block;margin-top:0.5rem">JPG, PNG (max 5MB)</small>
+          </div>
+          <div style="flex:1;min-width:250px">
+            <h3 style="color:var(--uoc-main);margin-bottom:0.5rem">Profile Photo Guidelines</h3>
+            <ul style="color:#6b7280;font-size:0.9rem;list-style-position:inside;line-height:1.8">
+              <li>Use a clear, professional headshot</li>
+              <li>Face should be clearly visible</li>
+              <li>Plain or professional background</li>
+              <li>Good lighting recommended</li>
+              <li>Square format works best</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Information Form -->
+      <form style="margin-top:1rem">
+        <h3 style="color:var(--uoc-main);margin-bottom:1rem;border-bottom:2px solid var(--uoc-accent);padding-bottom:0.5rem">Personal Information</h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="firstName" placeholder="First name" />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" id="lastName" placeholder="Last name" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="coordinator@cmb.ac.lk" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="phone" placeholder="+94 xx xxx xxxx" />
+          </div>
+          <div class="form-group">
+            <label>Office Number</label>
+            <input type="text" id="officeNo" placeholder="Office room/building" />
+          </div>
+        </div>
+
+        <h3 style="color:var(--uoc-main);margin-bottom:1rem;border-bottom:2px solid var(--uoc-accent);padding-bottom:0.5rem;margin-top:1.5rem">Professional Information</h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Designation / Title</label>
+            <input type="text" id="designation" placeholder="e.g., Academic Coordinator" />
+          </div>
+          <div class="form-group">
+            <label>Experience (Years)</label>
+            <input type="number" id="experience" placeholder="0" min="0" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Specialization / Focus Area</label>
+          <input type="text" id="specialization" placeholder="e.g., Internship Management, Career Development" />
+        </div>
+
+        <h3 style="color:var(--uoc-main);margin-bottom:1rem;border-bottom:2px solid var(--uoc-accent);padding-bottom:0.5rem;margin-top:1.5rem">Bio & Notes</h3>
+
+        <div class="form-group">
+          <label>Bio / About</label>
+          <textarea id="bio" rows="4" placeholder="Brief bio or professional summary..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Office Hours / Availability</label>
+          <textarea id="availability" rows="3" placeholder="e.g., Monday-Friday 9AM-5PM, or available by appointment..."></textarea>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap">
+          <button type="button" class="btn btn-primary" onclick="saveProfile()">Save Profile</button>
+          <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    // Profile picture preview
+    function previewProfilePic() {
+      const file = document.getElementById('profilePic').files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('profilePicPreview').src = e.target.result;
+          // Save to localStorage
+          localStorage.setItem('profilePicture', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Save profile data
+    function saveProfile() {
+      const profile = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        officeNo: document.getElementById('officeNo').value,
+        designation: document.getElementById('designation').value,
+        experience: document.getElementById('experience').value,
+        specialization: document.getElementById('specialization').value,
+        bio: document.getElementById('bio').value,
+        availability: document.getElementById('availability').value
+      };
+      localStorage.setItem('coordinatorProfile', JSON.stringify(profile));
+      alert('Profile saved successfully!');
+    }
+
+    // Load profile data
+    function loadProfile() {
+      const profile = JSON.parse(localStorage.getItem('coordinatorProfile') || '{}');
+      if (profile.firstName) {
+        document.getElementById('firstName').value = profile.firstName || '';
+        document.getElementById('lastName').value = profile.lastName || '';
+        document.getElementById('email').value = profile.email || '';
+        document.getElementById('phone').value = profile.phone || '';
+        document.getElementById('officeNo').value = profile.officeNo || '';
+        document.getElementById('designation').value = profile.designation || '';
+        document.getElementById('experience').value = profile.experience || '';
+        document.getElementById('specialization').value = profile.specialization || '';
+        document.getElementById('bio').value = profile.bio || '';
+        document.getElementById('availability').value = profile.availability || '';
+      }
+
+      const pic = localStorage.getItem('profilePicture');
+      if (pic) {
+        document.getElementById('profilePicPreview').src = pic;
+      }
+    }
+
+    // Reset form
+    function resetForm() {
+      if (confirm('Reset all fields to defaults?')) {
+        document.getElementById('firstName').value = '';
+        document.getElementById('lastName').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('officeNo').value = '';
+        document.getElementById('designation').value = '';
+        document.getElementById('experience').value = '';
+        document.getElementById('specialization').value = '';
+        document.getElementById('bio').value = '';
+        document.getElementById('availability').value = '';
+        document.getElementById('profilePicPreview').src = 'https://via.placeholder.com/120?text=Photo';
+      }
+    }
+
+    // Load profile on page load
+    loadProfile();
+  </script>
+</body>
+</html>
