@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Site Preferences - Coordinator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root{--uoc-main:#0c1b3c;--uoc-accent:#3b82f6;--uoc-text:#1f2937}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#fff;color:var(--uoc-text);line-height:1.6}
+    a{text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:1rem}
+    header{position:sticky;top:0;background:white;box-shadow:0 10px 20px rgba(0,0,0,0.05);border-bottom:1px solid #e5e7eb;z-index:100}
+    .header-inner{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+    .logo{display:flex;align-items:center;font-weight:700;color:var(--uoc-main);font-size:1.1rem}
+    .logo img{width:40px;height:40px;margin-right:0.75rem;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+    nav{display:flex;gap:0.5rem;flex-wrap:wrap}
+    .nav-link{padding:0.6rem 1rem;border-radius:999px;font-weight:600;color:var(--uoc-main);transition:all 0.2s;font-size:0.95rem}
+    .nav-link:hover{color:var(--uoc-accent)}
+    .nav-link.active{background:var(--uoc-main);color:#fff}
+    .card{background:#fff;padding:1.25rem;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.05);margin-top:1rem}
+    .settings-section{margin-bottom:2rem}
+    .settings-section h3{color:var(--uoc-main);margin-bottom:0.75rem;font-size:1.1rem}
+    .setting-item{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 0;border-bottom:1px solid #f0f0f0}
+    .setting-item:last-child{border-bottom:none}
+    .setting-label{display:flex;flex-direction:column}
+    .setting-label strong{color:var(--uoc-text);margin-bottom:0.25rem}
+    .setting-label small{color:#6b7280}
+    .toggle{position:relative;display:inline-block;width:50px;height:28px}
+    .toggle input{opacity:0;width:0;height:0}
+    .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:0.3s;border-radius:24px}
+    .slider:before{position:absolute;content:"";height:22px;width:22px;left:3px;bottom:3px;background-color:white;transition:0.3s;border-radius:50%}
+    input:checked+.slider{background-color:var(--uoc-accent)}
+    input:checked+.slider:before{transform:translateX(22px)}
+    select{padding:0.5rem;border-radius:6px;border:1px solid #e5e7eb}
+    .btn{padding:0.6rem 1rem;border-radius:999px;border:none;cursor:pointer;font-weight:600}
+    .btn-primary{background:linear-gradient(90deg,var(--uoc-main),var(--uoc-accent));color:white}
+    .btn-secondary{background:#f3f4f6;color:var(--uoc-text)}
+    .btn:hover{transform:translateY(-2px)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="coordinator-dashboard.html" class="logo"><img src="images/uni logo.png" alt="UoC Logo" style="width:40px;height:40px;border-radius:8px">Coordinator Portal</a>
+      <nav>
+        <a href="coordinator-dashboard.html" class="nav-link">Dashboard</a>
+        <a href="create-announcement.html" class="nav-link">Create Announcement</a>
+        <a href="applications.html" class="nav-link">Applications</a>
+        <a href="student-management.html" class="nav-link">Student Management</a>
+        <a href="profile-settings.html" class="nav-link">Profile Settings</a>
+        <a href="site-preferences.html" class="nav-link active">Site Preferences</a>
+        <a href="#" class="nav-link" style="color:#dc2626">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h1 style="color:var(--uoc-main);margin-bottom:0.5rem">Site Preferences</h1>
+      <p style="color:#6b7280;margin-bottom:1.5rem">Configure system settings and preferences for the coordinator portal.</p>
+
+      <!-- Display Settings -->
+      <div class="settings-section">
+        <h3>Display Settings</h3>
+        <div class="setting-item">
+          <div class="setting-label">
+            <strong>Dark Mode</strong>
+            <small>Enable dark theme for the application</small>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="darkMode">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <div class="setting-label">
+            <strong>Items Per Page</strong>
+            <small>Default number of rows in tables</small>
+          </div>
+          <select id="itemsPerPage" style="width:100px">
+            <option value="10">10</option>
+            <option value="25" selected>25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <div class="setting-item">
+          <div class="setting-label">
+            <strong>Sidebar Collapse</strong>
+            <small>Collapse navigation sidebar by default</small>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="sidebarCollapse">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Notification Settings -->
+      <div class="settings-section">
+        <h3>Notification Settings</h3>
+        <div class="setting-item">
+          <div class="setting-label">
+            <strong>Email Notifications</strong>
+            <small>Receive email alerts for new applications</small>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="emailNotif" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <div class="setting-label">
+            <strong>Application Alerts</strong>
+            <small>Get notified when students apply for internships</small>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="appAlerts" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <div class="setting-label">
+            <strong>CSV Upload Notifications</strong>
+            <small>Receive confirmation when student list is uploaded</small>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="csvNotif" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- System Settings -->
+      <div class="settings-section">
+        <h3>System Settings</h3>
+        <div class="setting-item">
+          <div class="setting-label">
+            <strong>Automatic Backup</strong>
+            <small>Backup data daily at 2:00 AM</small>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="autoBackup" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <div class="setting-label">
+            <strong>Session Timeout (minutes)</strong>
+            <small>Auto logout after inactivity</small>
+          </div>
+          <input type="number" id="sessionTimeout" value="30" style="width:100px;padding:0.5rem;border:1px solid #e5e7eb;border-radius:6px" />
+        </div>
+        <div class="setting-item">
+          <div class="setting-label">
+            <strong>File Upload Size Limit (MB)</strong>
+            <small>Maximum CSV file size for student uploads</small>
+          </div>
+          <input type="number" id="uploadLimit" value="10" style="width:100px;padding:0.5rem;border:1px solid #e5e7eb;border-radius:6px" />
+        </div>
+      </div>
+
+      <!-- Data & Privacy -->
+      <div class="settings-section">
+        <h3>Data & Privacy</h3>
+        <div class="setting-item">
+          <div class="setting-label">
+            <strong>Data Retention Period</strong>
+            <small>Keep archived applications for how many years?</small>
+          </div>
+          <select id="retentionPeriod" style="width:100px">
+            <option value="1">1 Year</option>
+            <option value="2">2 Years</option>
+            <option value="3" selected>3 Years</option>
+            <option value="5">5 Years</option>
+            <option value="7">7 Years</option>
+          </select>
+        </div>
+        <div class="setting-item">
+          <div class="setting-label">
+            <strong>Enable Audit Logging</strong>
+            <small>Log all system activities for compliance</small>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="auditLog" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="margin-top:2rem;display:flex;gap:0.75rem">
+        <button class="btn btn-primary" onclick="savePreferences()">Save Preferences</button>
+        <button class="btn btn-secondary" onclick="resetDefaults()">Reset to Defaults</button>
+        <button class="btn btn-secondary" onclick="exportSettings()">Export Settings</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    // Load preferences from localStorage
+    function loadPreferences() {
+      const prefs = JSON.parse(localStorage.getItem('sitePreferences') || '{}');
+      document.getElementById('darkMode').checked = prefs.darkMode || false;
+      document.getElementById('itemsPerPage').value = prefs.itemsPerPage || 25;
+      document.getElementById('sidebarCollapse').checked = prefs.sidebarCollapse || false;
+      document.getElementById('emailNotif').checked = prefs.emailNotif !== false;
+      document.getElementById('appAlerts').checked = prefs.appAlerts !== false;
+      document.getElementById('csvNotif').checked = prefs.csvNotif !== false;
+      document.getElementById('autoBackup').checked = prefs.autoBackup !== false;
+      document.getElementById('sessionTimeout').value = prefs.sessionTimeout || 30;
+      document.getElementById('uploadLimit').value = prefs.uploadLimit || 10;
+      document.getElementById('retentionPeriod').value = prefs.retentionPeriod || 3;
+      document.getElementById('auditLog').checked = prefs.auditLog !== false;
+    }
+
+    // Save preferences to localStorage
+    function savePreferences() {
+      const prefs = {
+        darkMode: document.getElementById('darkMode').checked,
+        itemsPerPage: document.getElementById('itemsPerPage').value,
+        sidebarCollapse: document.getElementById('sidebarCollapse').checked,
+        emailNotif: document.getElementById('emailNotif').checked,
+        appAlerts: document.getElementById('appAlerts').checked,
+        csvNotif: document.getElementById('csvNotif').checked,
+        autoBackup: document.getElementById('autoBackup').checked,
+        sessionTimeout: document.getElementById('sessionTimeout').value,
+        uploadLimit: document.getElementById('uploadLimit').value,
+        retentionPeriod: document.getElementById('retentionPeriod').value,
+        auditLog: document.getElementById('auditLog').checked
+      };
+      localStorage.setItem('sitePreferences', JSON.stringify(prefs));
+      alert('Preferences saved successfully!');
+    }
+
+    // Reset to default values
+    function resetDefaults() {
+      if (confirm('Are you sure? This will reset all preferences to default values.')) {
+        localStorage.removeItem('sitePreferences');
+        loadPreferences();
+        alert('Preferences reset to defaults.');
+      }
+    }
+
+    // Export settings as JSON
+    function exportSettings() {
+      const prefs = JSON.parse(localStorage.getItem('sitePreferences') || '{}');
+      const dataStr = JSON.stringify(prefs, null, 2);
+      const dataBlob = new Blob([dataStr], {type: 'application/json'});
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'site-preferences-' + new Date().toISOString().split('T')[0] + '.json';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // Initialize on page load
+    loadPreferences();
+  </script>
+</body>
+</html>
