@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Announcement - Coordinator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* small subset of styles copied from coordinator-dashboard */
+    :root{--uoc-main:#0c1b3c;--uoc-accent:#3b82f6;--uoc-text:#1f2937;--uoc-bg:#ffffff}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:var(--uoc-bg);color:var(--uoc-text);line-height:1.6}
+    a{text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:1rem}
+    header{position:sticky;top:0;background:white;box-shadow:0 10px 20px rgba(0,0,0,0.05);border-bottom:1px solid #e5e7eb;z-index:100}
+    .header-inner{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+    .logo{display:flex;align-items:center;font-weight:700;color:var(--uoc-main);font-size:1.1rem}
+    .logo img{width:40px;height:40px;margin-right:0.75rem;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+    nav{display:flex;gap:0.5rem;flex-wrap:wrap}
+    .nav-link{padding:0.6rem 1rem;border-radius:999px;font-weight:600;color:var(--uoc-main);transition:all 0.2s;font-size:0.95rem}
+    .nav-link:hover{color:var(--uoc-accent)}
+    .nav-link.active{background:var(--uoc-main);color:#fff}
+    .card{background:#fff;padding:1.25rem;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.05);margin-top:1rem}
+    label{font-weight:700}
+    input,textarea,select{width:100%;padding:0.75rem;border-radius:8px;border:1px solid #e5e7eb;margin-top:0.5rem}
+    .btn{padding:0.6rem 1rem;border-radius:999px;border:none;cursor:pointer}
+    .btn-primary{background:linear-gradient(90deg,var(--uoc-main),var(--uoc-accent));color:white}
+    .btn-secondary{background:#f3f4f6;color:var(--uoc-text)}
+    .btn:hover{transform:translateY(-2px)}
+    .announcement-card{background:linear-gradient(135deg,#f5f7fa 0%,#e8ecf1 100%);border-left:4px solid var(--uoc-accent);padding:1.25rem;border-radius:8px;margin-top:0.75rem}
+    .announcement-card h4{color:var(--uoc-main);margin-bottom:0.5rem}
+    .announcement-card p{color:#555;margin:0.25rem 0;font-size:0.95rem}
+    .announcement-meta{display:flex;gap:1rem;margin-top:0.75rem;font-size:0.85rem;color:#6b7280}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="coordinator-dashboard.html" class="logo"><img src="images/uni logo.png" alt="logo" style="width:40px;height:40px;border-radius:8px">Coordinator Portal</a>
+      <nav>
+        <a href="coordinator-dashboard.html" class="nav-link">Dashboard</a>
+        <a href="create-announcement.html" class="nav-link active">Create Announcement</a>
+        <a href="applications.html" class="nav-link">Applications</a>
+        <a href="student-management.html" class="nav-link">Student Management</a>
+        <a href="profile-settings.html" class="nav-link">Profile Settings</a>
+        <a href="site-preferences.html" class="nav-link">Site Preferences</a>
+        <a href="#" class="nav-link" style="color:#dc2626">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h1 style="color:var(--uoc-main);margin-bottom:0.5rem">Create Announcement</h1>
+      <p style="color:#6b7280;margin-top:0">Create a new internship announcement to share with eligible students.</p>
+      <form style="margin-top:1rem">
+        <label>Company Name</label>
+        <input type="text" id="companyName" placeholder="Company name" />
+        <label style="margin-top:0.75rem">Position / Posts</label>
+        <input type="text" id="position" placeholder="e.g., Software Intern - 3 posts" />
+        <label style="margin-top:0.75rem">Quantity</label>
+        <input type="number" id="quantity" placeholder="Number of interns" />
+        <label style="margin-top:0.75rem">Salary / Stipend</label>
+        <input type="text" id="salary" placeholder="Monthly stipend" />
+        <label style="margin-top:0.75rem">Instructions / Notes</label>
+        <textarea rows="5" id="instructions" placeholder="Selection instructions, documents required..."></textarea>
+        <div style="margin-top:1rem;display:flex;gap:0.5rem;">
+          <button type="button" class="btn btn-primary" onclick="publishAnnouncement()">Publish Announcement</button>
+          <button type="button" class="btn btn-secondary" onclick="saveDraft()">Save Draft</button>
+        </div>
+      </form>
+
+      <!-- Published Announcements -->
+      <div style="margin-top:2rem">
+        <h2 style="color:var(--uoc-main);margin-bottom:0.75rem">Published Announcements</h2>
+        <div id="announcementsList"></div>
+        <div id="noAnnouncements" style="text-align:center;color:#9ca3af;padding:2rem">
+          No announcements published yet.
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    lucide.createIcons();
+
+    // Load announcements from localStorage
+    function loadAnnouncements() {
+      const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+      const list = document.getElementById('announcementsList');
+      const noAnnouncements = document.getElementById('noAnnouncements');
+      
+      if (announcements.length === 0) {
+        noAnnouncements.style.display = 'block';
+        list.innerHTML = '';
+        return;
+      }
+      
+      noAnnouncements.style.display = 'none';
+      list.innerHTML = announcements.map((ann, idx) => `
+        <div class="announcement-card">
+          <h4>${escapeHtml(ann.company)}</h4>
+          <p><strong>Position:</strong> ${escapeHtml(ann.position)}</p>
+          <p><strong>Quantity:</strong> ${escapeHtml(ann.quantity)} interns</p>
+          <p><strong>Salary:</strong> ${escapeHtml(ann.salary)}</p>
+          <p><strong>Instructions:</strong> ${escapeHtml(ann.instructions)}</p>
+          <div class="announcement-meta">
+            <span>📅 Published: ${ann.publishedDate}</span>
+            <button onclick="deleteAnnouncement(${idx})" style="background:none;border:none;color:#dc2626;cursor:pointer;font-weight:600">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function publishAnnouncement() {
+      const company = document.getElementById('companyName').value.trim();
+      const position = document.getElementById('position').value.trim();
+      const quantity = document.getElementById('quantity').value.trim();
+      const salary = document.getElementById('salary').value.trim();
+      const instructions = document.getElementById('instructions').value.trim();
+
+      if (!company || !position || !quantity || !salary || !instructions) {
+        alert('Please fill in all fields');
+        return;
+      }
+
+      const announcement = {
+        company,
+        position,
+        quantity,
+        salary,
+        instructions,
+        publishedDate: new Date().toLocaleDateString()
+      };
+
+      const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+      announcements.unshift(announcement);
+      localStorage.setItem('announcements', JSON.stringify(announcements));
+
+      // Clear form
+      document.getElementById('companyName').value = '';
+      document.getElementById('position').value = '';
+      document.getElementById('quantity').value = '';
+      document.getElementById('salary').value = '';
+      document.getElementById('instructions').value = '';
+
+      alert('Announcement published successfully! Students can now see it.');
+      loadAnnouncements();
+    }
+
+    function saveDraft() {
+      const company = document.getElementById('companyName').value;
+      const position = document.getElementById('position').value;
+      const quantity = document.getElementById('quantity').value;
+      const salary = document.getElementById('salary').value;
+      const instructions = document.getElementById('instructions').value;
+
+      const draft = {company, position, quantity, salary, instructions};
+      localStorage.setItem('announcementDraft', JSON.stringify(draft));
+      alert('Draft saved!');
+    }
+
+    function deleteAnnouncement(idx) {
+      if (confirm('Are you sure you want to delete this announcement?')) {
+        const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+        announcements.splice(idx, 1);
+        localStorage.setItem('announcements', JSON.stringify(announcements));
+        loadAnnouncements();
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str && str !== 0) return '';
+      return String(str).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[m]; });
+    }
+
+    // Load announcements and draft on page load
+    loadAnnouncements();
+    const draft = JSON.parse(localStorage.getItem('announcementDraft') || '{}');
+    if (draft.company) {
+      document.getElementById('companyName').value = draft.company || '';
+      document.getElementById('position').value = draft.position || '';
+      document.getElementById('quantity').value = draft.quantity || '';
+      document.getElementById('salary').value = draft.salary || '';
+      document.getElementById('instructions').value = draft.instructions || '';
+    }
+  </script>
+</body>
+</html>
