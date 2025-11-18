@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard - UoC FoT ICT Internship System</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Define Colors based on Tailwind Config */
+      :root {
+        --uoc-main: #0c1b3c; /* Deep Navy/Official UoC Dark Blue */
+        --uoc-accent: #3b82f6; /* Light Blue (Highlight) */
+        --uoc-bg: #f5f7fa; /* Very Light Gray Background */
+        --uoc-text: #1f2937; /* Dark Gray for main text */
+        --color-green: #10b981;
+        --color-yellow: #f59e0b;
+      }
+
+      /* Base Styles */
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--uoc-bg);
+        color: var(--uoc-text);
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 1280px; /* max-w-7xl */
+        margin: 0 auto;
+        padding-left: 1.5rem; /* px-6 */
+        padding-right: 1.5rem; /* px-6 */
+      }
+
+      /* Header Styling */
+      .header {
+        position: sticky;
+        top: 0;
+        background-color: white;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-md */
+        z-index: 50;
+        border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem; /* py-4 */
+        padding-bottom: 1rem;
+      }
+
+      .logo-link {
+        display: flex;
+        align-items: center;
+        font-size: 1.25rem; /* text-xl */
+        font-weight: 700; /* font-bold */
+        color: var(--uoc-main);
+        line-height: 1.2;
+      }
+
+      .logo-img {
+        width: 3rem; /* w-12 */
+        height: 3rem; /* h-12 */
+        border-radius: 0.5rem; /* rounded-lg */
+        margin-right: 0.75rem; /* mr-3 */
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+      }
+
+      .nav-link {
+        text-decoration: none;
+        color: var(--uoc-text);
+        font-weight: 600; /* font-semibold */
+        transition: color 0.3s;
+      }
+
+      .nav-link:hover {
+        color: var(--uoc-accent);
+      }
+
+      .logout-button {
+        padding: 0.5rem 1.25rem; /* px-5 py-2 */
+        background-color: var(--uoc-main);
+        color: white;
+        border-radius: 0.5rem; /* rounded-lg */
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow */
+        text-decoration: none;
+        transition: background-color 0.3s;
+      }
+
+      .logout-button:hover {
+        background-color: var(--uoc-accent);
+      }
+
+      /* Main Content Styling */
+      .py-10 {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+      }
+
+      .mb-10 {
+        margin-bottom: 2.5rem;
+      }
+      .mb-14 {
+        margin-bottom: 3.5rem;
+      }
+      .mb-6 {
+        margin-bottom: 1.5rem;
+      }
+
+      h1 {
+        font-size: 2.25rem; /* text-4xl */
+        font-weight: 800; /* font-extrabold */
+        color: var(--uoc-main);
+        margin-bottom: 0.5rem; /* mb-2 */
+      }
+
+      .text-lg {
+        font-size: 1.125rem;
+      }
+      .text-gray-600 {
+        color: #4b5563;
+      }
+      .text-gray-500 {
+        color: #6b7280;
+      }
+      .text-sm {
+        font-size: 0.875rem;
+      }
+      .font-medium {
+        font-weight: 500;
+      }
+      .font-semibold {
+        font-weight: 600;
+      }
+
+      /* Grid for Stats and Listings */
+      .grid-3-col {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .grid-2-col {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      @media (min-width: 640px) {
+        /* sm breakpoint */
+        .grid-3-col {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      @media (min-width: 768px) {
+        /* md breakpoint */
+        .grid-2-col {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      /* Card Styles */
+      .stat-card {
+        background-color: white;
+        padding: 1.5rem; /* p-6 */
+        border-radius: 1rem; /* rounded-2xl */
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl */
+      }
+      .stat-card h3 {
+        font-size: 1.5rem; /* text-2xl */
+        font-weight: 700; /* font-bold */
+        color: var(--uoc-main);
+        margin-bottom: 0.25rem; /* mb-1 */
+      }
+      .stat-card i {
+        margin-bottom: 0.75rem; /* mb-3 */
+      }
+
+      .stat-accent {
+        border-top: 4px solid var(--uoc-accent);
+      }
+      .stat-green {
+        border-top: 4px solid var(--color-green);
+      }
+      .stat-yellow {
+        border-top: 4px solid var(--color-yellow);
+      }
+      .text-uoc-accent {
+        color: var(--uoc-accent);
+      }
+      .text-green-500 {
+        color: var(--color-green);
+      }
+      .text-yellow-500 {
+        color: var(--color-yellow);
+      }
+
+      /* Announcement/Application Status */
+      .announcement-card,
+      .application-item {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 0.75rem; /* rounded-xl */
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow */
+      }
+      .announcement-card h4 {
+        font-size: 1.25rem; /* text-xl */
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      .announcement-accent {
+        border-left: 4px solid var(--uoc-accent);
+      }
+      .announcement-green {
+        border-left: 4px solid var(--color-green);
+      }
+
+      /* Listing Cards */
+      .listing-card {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border-top: 8px solid var(--uoc-accent);
+        transition: box-shadow 0.3s;
+      }
+      .listing-card:hover {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04); /* hover:shadow-2xl */
+      }
+
+      .listing-card h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .apply-button {
+        padding: 0.5rem 1.25rem;
+        background-color: var(--uoc-main);
+        color: white;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .apply-button:hover {
+        background-color: var(--uoc-accent);
+      }
+
+      /* Application Status List */
+      .application-list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        padding: 1.25rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      }
+
+      .status-badge {
+        padding: 0.25rem 1rem;
+        border-radius: 9999px; /* rounded-full */
+        font-weight: 500;
+      }
+      .status-pending {
+        background-color: #fef3c7; /* yellow-100 */
+        color: #b45309; /* yellow-700 */
+      }
+      .status-approved {
+        background-color: #d1fae5; /* green-100 */
+        color: #065f46; /* green-700 */
+      }
+    </style>
+
+    <script>
+      // Initialize Lucide icons on DOMContentLoaded
+      document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+      });
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="container header-content">
+        <div class="logo-link" style="cursor: default">
+          <img
+            src="./images/uni logo.png"
+            class="logo-img"
+            alt="UoC FoT Logo"
+          />
+          University of Colombo <br />
+          Faculty of Technology <br />
+          Dept. of ICT
+        </div>
+        
+
+        <nav
+          style="display: flex; gap: 2.5rem"
+          class="md:flex space-x-10 text-base font-semibold"
+        >
+          <a href="cvtemplate.html" class="nav-link">CV Templates</a>
+          <a href="blogs.html" class="nav-link">Blogs</a>
+          
+          <a
+            href="student_profile.html"
+            class="nav-link"
+            style="display: flex; align-items: center"
+          >
+            <i
+              data-lucide="user"
+              style="width: 1.25rem; height: 1.25rem; margin-right: 0.25rem"
+            ></i>
+            Profile
+          </a>
+        </nav>
+
+        <a href="index.html" class="logout-button"> Logout </a>
+      </div>
+    </header>
+
+    <div class="container py-10">
+      <div class="mb-10">
+        <h1>Welcome Back, [Student Name]!</h1>
+        <p class="text-gray-600 text-lg">
+          Here is your internship dashboard overview.
+        </p>
+      </div>
+
+      <div class="grid-3-col mb-14">
+        <div class="stat-card stat-accent">
+          <i
+            data-lucide="briefcase"
+            class="text-uoc-accent"
+            style="width: 2.5rem; height: 2.5rem"
+          ></i>
+          <h3>Available Internships</h3>
+          <p class="text-gray-500 text-lg">14</p>
+        </div>
+
+        <div class="stat-card stat-green">
+          <i
+            data-lucide="send"
+            class="text-green-500"
+            style="width: 2.5rem; height: 2.5rem"
+          ></i>
+          <h3>Applications Sent</h3>
+          <p class="text-gray-500 text-lg">4</p>
+        </div>
+
+        <div class="stat-card stat-yellow">
+          <i
+            data-lucide="bell"
+            class="text-yellow-500"
+            style="width: 2.5rem; height: 2.5rem"
+          ></i>
+          <h3>Announcements</h3>
+          <p class="text-gray-500 text-lg">2 New</p>
+        </div>
+      </div>
+
+      <h2
+        class="text-3xl font-extrabold text-uoc-main mb-6"
+        style="font-size: 1.875rem; font-weight: 800; color: var(--uoc-main)"
+      >
+        Announcements
+      </h2>
+
+      <div
+        class="mb-14"
+        style="display: flex; flex-direction: column; gap: 1rem"
+      >
+        <div class="announcement-card announcement-accent">
+          <h4>📢 Internship Handbook Updated</h4>
+          <p class="text-gray-600">
+            The updated handbook is now available. Please review it before
+            applying.
+          </p>
+          <p class="text-sm text-gray-400" style="margin-top: 0.5rem">
+            Posted: Jan 15, 2025
+          </p>
+        </div>
+
+        <div class="announcement-card announcement-green">
+          <h4>📢 New Company Partnerships</h4>
+          <p class="text-gray-600">
+            We have added 5 new IT companies for the 2025 internship batch.
+          </p>
+          <p class="text-sm text-gray-400" style="margin-top: 0.5rem">
+            Posted: Jan 18, 2025
+          </p>
+        </div>
+      </div>
+
+      <h2
+        class="text-3xl font-extrabold text-uoc-main mb-6"
+        style="font-size: 1.875rem; font-weight: 800; color: var(--uoc-main)"
+      >
+        Available Internships
+      </h2>
+
+      <div class="grid-2-col mb-14">
+        <div class="listing-card">
+          <h3>Frontend Developer Intern</h3>
+          <p class="text-gray-500 mb-4">TechCorp Lanka • Colombo</p>
+          <a href="apply.html" class="apply-button" role="button">Apply Now</a>
+        </div>
+
+        <div class="listing-card">
+          <h3>UI/UX Designer Intern</h3>
+          <p class="text-gray-500 mb-4">CreativeHub • Remote</p>
+          <a href="apply.html" class="apply-button" role="button">Apply Now</a>
+        </div>
+      </div>
+
+      <h2
+        class="text-3xl font-extrabold text-uoc-main mb-6"
+        style="font-size: 1.875rem; font-weight: 800; color: var(--uoc-main)"
+      >
+        Your Applications
+      </h2>
+
+      <div style="display: flex; flex-direction: column; gap: 1rem">
+        <div class="application-list-item">
+          <div>
+            <h4
+              class="text-xl font-semibold"
+              style="font-size: 1.25rem; font-weight: 600"
+            >
+              Software Engineering Intern
+            </h4>
+            <p class="text-gray-500">Softlogic</p>
+          </div>
+          <span class="status-badge status-pending">Pending</span>
+        </div>
+
+        <div class="application-list-item">
+          <div>
+            <h4
+              class="text-xl font-semibold"
+              style="font-size: 1.25rem; font-weight: 600"
+            >
+              QA Intern
+            </h4>
+            <p class="text-gray-500">IFS Sri Lanka</p>
+          </div>
+          <span class="status-badge status-approved">Approved</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
