@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blogs - UoC FoT ICT Internship System</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --uoc-main: #0c1b3c;
+        --uoc-accent: #3b82f6;
+        --uoc-bg: #f5f7fa;
+        --uoc-text: #1f2937;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--uoc-bg);
+        color: var(--uoc-text);
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem;
+      }
+
+      /* Header */
+      .header {
+        position: sticky;
+        top: 0;
+        background-color: white;
+        z-index: 50;
+        border-bottom: 1px solid #e5e7eb;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+      }
+
+      .logo-link {
+        display: flex;
+        align-items: center;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--uoc-main);
+      }
+
+      .logo-img {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.5rem;
+        margin-right: 0.75rem;
+      }
+
+      .nav-link {
+        text-decoration: none;
+        color: var(--uoc-text);
+        font-weight: 600;
+      }
+      .nav-link:hover {
+        color: var(--uoc-accent);
+      }
+      .logout-button,.back-button {
+        padding: 0.5rem 1.25rem;
+        background-color: var(--uoc-main);
+        color: white;
+        border-radius: 0.5rem;
+        text-decoration: none;
+      }
+
+      /* Blog Input Form */
+      .blog-form {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        margin-bottom: 2rem;
+      }
+
+      .blog-form input,
+      .blog-form textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      .blog-form button {
+        padding: 0.75rem 1.5rem;
+        background-color: var(--uoc-main);
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+      }
+      .blog-form button:hover {
+        background-color: var(--uoc-accent);
+      }
+
+      /* Blogs List */
+      .blog-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.08);
+        border-left: 6px solid var(--uoc-accent);
+      }
+
+      .blog-card h3 {
+        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      .blog-meta {
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin-bottom: 0.75rem;
+      }
+    </style>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+
+        // Load existing blogs (temp local storage)
+        const blogsContainer = document.getElementById("blogs-container");
+        let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+
+        function displayBlogs() {
+          blogsContainer.innerHTML = "";
+          blogs.forEach((blog) => {
+            blogsContainer.innerHTML += `
+              <div class="blog-card">
+                <h3>${blog.title}</h3>
+                <p class="blog-meta">By ${blog.name} • ${blog.date}</p>
+                <p>${blog.content}</p>
+              </div>
+            `;
+          });
+        }
+
+        displayBlogs();
+
+        // Save a new blog
+        document.getElementById("blogForm").addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const title = document.getElementById("title").value;
+          const content = document.getElementById("content").value;
+
+          const newBlog = {
+            name,
+            title,
+            content,
+            date: new Date().toLocaleDateString(),
+          };
+
+          blogs.unshift(newBlog);
+          localStorage.setItem("blogs", JSON.stringify(blogs));
+
+          displayBlogs();
+          e.target.reset();
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="container header-content">
+        <div class="logo-link">
+          <img src="./images/uni logo.png" class="logo-img" />
+          University of Colombo <br />
+          Faculty of Technology <br />
+          Dept. of ICT
+        </div>
+       <nav style="display: flex; gap: 2.5rem;" class="md:flex space-x-10 text-base font-semibold">
+            <a href="studentdashboard.html" class="nav-link">Dashboard</a>
+            <a href="cvtemplate.html" class="nav-link nav-active">CV Templates</a>
+            <a href="blogs.html" class="nav-link">Blogs</a>
+            
+            <a href="profile.html" class="nav-link" style="display: flex; align-items: center;">
+                <i data-lucide="user" style="width: 1.25rem; height: 1.25rem; margin-right: 0.25rem;"></i> Profile
+            </a>
+        </nav>
+
+        <nav style="display: flex; gap: 2.5rem">
+          
+            
+          
+        </nav>
+
+        <a href="index.html" class="logout-button">Logout</a>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <h1 style="font-size: 2rem; font-weight: 800; color: var(--uoc-main); margin-bottom: 1rem;">
+        Internship Experience Blogs
+      </h1>
+      <p class="text-gray-600" style="margin-bottom: 2rem;">
+        Share your internship journey and learn from experiences of other students.
+      </p>
+
+      <!-- ADD BLOG FORM -->
+      <div class="blog-form">
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">✍️ Write Your Experience</h2>
+
+        <form id="blogForm">
+          <input type="text" id="name" placeholder="Your Name" required />
+
+          <input type="text" id="title" placeholder="Blog Title" required />
+
+          <textarea id="content" rows="5" placeholder="Write your internship experience..." required></textarea>
+
+          <button type="submit">Publish Blog</button>
+        </form>
+      </div>
+
+      <!-- BLOGS DISPLAY -->
+      <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">
+        📚 Student Blogs
+      </h2>
+
+      <div id="blogs-container"></div>
+    </div>
+  </body>
+</html>
+

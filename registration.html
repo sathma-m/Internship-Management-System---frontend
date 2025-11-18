@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration - UoC FoT ICT Internship System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    
+    <script>
+        // --- Tailwind Configuration ---
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'uoc-main': '#0c1b3c', /* Deep Navy/Official UoC Dark Blue */
+                        'uoc-accent': '#3b82f6', /* Light Blue (Highlight) */
+                        'uoc-bg': '#f5f7fa', /* Very Light Gray Background */
+                        'uoc-text': '#1f2937', /* Dark Gray for main text */
+                    },
+                },
+            },
+        };
+    </script>
+    
+    <script>
+        // --- JavaScript Logic for Registration ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const registrationForm = document.getElementById("registrationForm");
+            const messageBox = document.getElementById("messageBox");
+
+            registrationForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                messageBox.style.display = 'none';
+
+                const password = document.getElementById("password").value;
+                const confirmPassword = document.getElementById("confirm_password").value;
+
+                if (password !== confirmPassword) {
+                    messageBox.textContent = "Passwords do not match.";
+                    messageBox.classList.remove('bg-green-100', 'text-green-700');
+                    messageBox.classList.add('bg-red-100', 'text-red-700');
+                    messageBox.style.display = 'block';
+                    return;
+                }
+                
+                // --- SIMULATED REGISTRATION LOGIC ---
+                messageBox.textContent = "Registration request submitted. You will be notified upon approval.";
+                messageBox.classList.remove('bg-red-100', 'text-red-700');
+                messageBox.classList.add('bg-green-100', 'text-green-700');
+                messageBox.style.display = 'block';
+
+                // You might prevent redirect to allow user to read the message.
+            });
+        });
+    </script>
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+        }
+        /* Full background color using uoc-main */
+        .uoc-login-bg {
+             background-color: #0c1b3c; /* Direct application of uoc-main */
+        }
+    </style>
+</head>
+
+<body class="uoc-login-bg flex justify-center items-center min-h-screen">
+    
+    <div class="w-full max-w-lg"> 
+        <div class="bg-white p-8 sm:p-10 rounded-xl shadow-2xl border-t-4 border-uoc-accent mx-4">
+            
+            <div class="text-center mb-6">
+                <img src="./images/uni logo.png" alt="UoC FoT Logo" class="w-16 h-16 mx-auto mb-2 rounded-lg shadow-md">
+                <h1 class="text-3xl font-bold text-uoc-main mb-1">Create Account</h1>
+                <p class="text-center text-gray-500">Join the UoC FoT Internship Portal</p>
+            </div>
+            
+            <div id="messageBox" class="p-3 mb-4 rounded-lg hidden text-sm font-medium" role="alert"></div>
+
+            <form id="registrationForm" class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                
+                <div class="mb-4 md:col-span-2">
+                    <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Select Your Role</label>
+                    <select id="role" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-uoc-accent focus:border-uoc-accent transition">
+                        <option value="">-- Choose Role --</option>
+                        <option value="student">Student</option>
+                        <option value="coordinator">Coordinator</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4 md:col-span-2">
+                    <label for="full_name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" id="full_name" placeholder="E.g., A. B. C. Perera" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-uoc-accent focus:border-uoc-accent transition"/>
+                </div>
+
+                <div class="mb-4 md:col-span-1">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">University Email</label>
+                    <input type="email" id="email" placeholder="indexnumber@stu.cmb.ac.lk" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-uoc-accent focus:border-uoc-accent transition"/>
+                </div>
+                
+                <div class="mb-4 md:col-span-1">
+                    <label for="index_number" class="block text-sm font-medium text-gray-700 mb-1">Index Number </label>
+                    <input type="text" id="index_number" placeholder="XXXXXXXXXX" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-uoc-accent focus:border-uoc-accent transition"/>
+                </div>
+
+                <div class="mb-4 md:col-span-1">
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-uoc-accent focus:border-uoc-accent transition"/>
+                </div>
+                
+                <div class="mb-6 md:col-span-1">
+                    <label for="confirm_password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                    <input type="password" id="confirm_password" placeholder="••••••••" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-uoc-accent focus:border-uoc-accent transition"/>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-uoc-main text-white font-semibold rounded-lg shadow-lg hover:bg-uoc-accent transition duration-300 transform hover:scale-[1.01] md:col-span-2">
+                    Register Now
+                </button>
+            </form>
+
+            <div class="text-center mt-6">
+                <p class="text-sm text-gray-600">
+                    Already have an account? 
+                    <a href="login.html" class="font-semibold text-uoc-accent hover:text-uoc-main transition">Login Here</a>
+                </p>
+            </div>
+            
+            <div class="text-center mt-8 pt-4 border-t border-gray-100">
+                <a href="index.html" class="text-sm text-gray-500 hover:text-uoc-main transition flex items-center justify-center">
+                    <i data-lucide="arrow-left" class="w-4 h-4 mr-1"></i> Back to Homepage
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

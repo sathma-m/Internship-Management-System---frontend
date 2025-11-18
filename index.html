@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>UoC FoT - ICT Internship Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom configuration for smooth scrolling and Inter font */
+        /* Custom configuration for smooth scrolling and Inter font */
+          html { scroll-behavior: smooth; }
+          body { font-family: 'Inter', sans-serif; }
+           /* Professional Card Hover Effect */
+          .card { transition: transform 0.3s, box-shadow 0.3s; }
+          .card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(10, 25, 50, 0.08); }
+          .nav-link:hover { border-bottom: 2px solid; }
+
+/* FIX: Compensate for the fixed header */
+          #about, #features, #blogs {
+          padding-top: 120px; /* Adjust this value (e.g., 120px) to match the height of your header + desired space */
+          margin-top: -100px; /* Must be negative and slightly less than padding-top to keep layout visually consistent */
+          }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'uoc-main': '#0c1b3c', /* Deep Navy/Official UoC Dark Blue */
+                        'uoc-accent': '#3b82f6', /* Light Blue (Highlight) */
+                        'uoc-bg': '#f5f7fa', /* Very Light Gray Background */
+                        'uoc-text': '#1f2937', /* Dark Gray for main text */
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-uoc-bg text-uoc-text">
+
+<header class="sticky top-0 bg-white shadow-xl z-50 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex justify-between items-center">
+        
+        <a href="index.html" class="flex items-center text-xl font-bold text-uoc-main transition duration-300">
+            <img src=".\images\uni logo.png" alt="UoC FoT Logo" class="w-12 h-12 rounded-lg mr-3 shadow-md">
+            University of Colombo <br> Faculty of Technology <br> Department of ICT 
+        </a>
+
+        <nav class="hidden md:flex space-x-10 text-base font-semibold">
+            <a href="index.html" class="text-uoc-main nav-link pb-1 border-uoc-main transition duration-200">Home</a>
+            <a href="#about" class="text-uoc-text hover:text-uoc-accent nav-link pb-1 border-uoc-accent transition duration-200">About Us</a>
+            <a href="#features" class="text-uoc-text hover:text-uoc-accent nav-link pb-1 border-uoc-accent transition duration-200">System Features</a>
+            <a href="#blogs" class="text-uoc-text hover:text-uoc-accent nav-link pb-1 border-uoc-accent transition duration-200">Blogs</a>
+        </nav>
+        
+        <a href="login.html" class="px-8 py-3 text-white bg-uoc-main rounded-full font-bold shadow-lg shadow-uoc-main/30 hover:bg-uoc-accent transition duration-300 transform hover:scale-105 flex items-center">
+            <i data-lucide="user-check" class="w-5 h-5 mr-2"></i> Secure Login
+        </a>
+    </div>
+</header>
+
+<section id="hero" class="bg-uoc-main text-white py-24 sm:py-32 lg:py-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        
+        <div>
+            <span class="text-sm font-semibold uppercase tracking-widest text-yellow-400 mb-4 block"></span>
+            <h1 class="text-6xl lg:text-7xl font-extrabold leading-tight mb-6">
+                Bridging Theory and Practice. <span class="text-uoc-accent">Career Ready.</span>
+            </h1>
+            <p class="text-xl text-blue-200 mb-10 max-w-xl">
+                The official centralized platform for academic monitoring, industry placement management, and structured internship assessment.
+            </p>
+            <a href="login.html" class="inline-flex items-center px-12 py-4 text-xl text-uoc-main bg-white rounded-full font-bold shadow-2xl shadow-white/40 hover:bg-gray-100 transition duration-300 transform hover:scale-105">
+                Start Your Internship <i data-lucide="arrow-right" class="w-6 h-6 ml-3"></i>
+            </a>
+        </div>
+        
+      <div class="hidden lg:block relative h-96">
+            <div class="absolute w-full h-full transform scale-110">
+                
+                <img src=".\images\DSC_00841-scaled.jpg" alt="Project Screenshot 1" 
+                    class="absolute top-8 left-0 w-3/4 h-auto rounded-lg shadow-2xl border-4 border-white 
+                    transform -rotate-6 transition duration-500 hover:rotate-0 hover:scale-105" 
+                />
+
+                <img src=".\images\CSB0119-scaled.jpg" alt="Project Screenshot 2" 
+                    class="absolute top-16 right-16 w-3/4 h-auto rounded-lg shadow-2xl border-4 border-white 
+                    transform rotate-0 transition duration-500 hover:scale-105" 
+                />
+
+                <img src=".\images\CSB0064-scaled.jpg" alt="Project Screenshot 3" 
+                    class="absolute top-28 left-16 w-3/4 h-auto rounded-lg shadow-2xl border-4 border-white 
+                    transform rotate-6 transition duration-500 hover:rotate-0 hover:scale-105" 
+                />
+
+            </div>
+            
+            
+        </div>
+    </div>
+</section>
+
+---
+
+<section id="about" class="py-20 sm:py-28 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-5xl font-extrabold text-uoc-main mb-4">About Us</h2>
+        <p class="text-xl text-gray-500 mb-16 max-w-4xl mx-auto">
+            Our mission is to simplify the pre-internship journey for students and streamline the application vetting process for our program coordinators
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-uoc-text">
+            <div class="p-6">
+                <i data-lucide="clipboard-check" class="w-10 h-10 text-uoc-accent mb-4 mx-auto"></i>
+                <h3 class="text-2xl font-bold mb-2">Bridging the Gap</h3>
+                <p class="text-gray-600">Connecting classroom knowledge directly to professional opportunities and industry standards.</p>
+            </div>
+            <div class="p-6 border-l border-r border-gray-200">
+                <i data-lucide="bar-chart-3" class="w-10 h-10 text-uoc-accent mb-4 mx-auto"></i>
+                <h3 class="text-2xl font-bold mb-2">Centralized Placements</h3>
+                <p class="text-gray-600">Access to a secure, vetted database of industry opportunities specifically approved by the ICT Department.</p>
+            </div>
+            <div class="p-6">
+                <i data-lucide="book-open-text" class="w-10 h-10 text-uoc-accent mb-4 mx-auto"></i>
+                <h3 class="text-2xl font-bold mb-2">ICT Specialization</h3>
+                <p class="text-gray-600">Internship relevance is strictly validated by department faculty.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+---
+
+<section id="features" class="py-20 sm:py-28 bg-uoc-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-5xl font-extrabold text-center text-uoc-main mb-16">System Features</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div class="card bg-white p-10 rounded-2xl shadow-xl border-t-8 border-uoc-accent/80 hover:shadow-2xl">
+                <div class="text-uoc-accent mb-6"><i data-lucide="layout-list" class="w-12 h-12"></i></div>
+                <h3 class="text-2xl font-bold text-uoc-text mb-4">Centralized Opportunity Board</h3>
+                <p class="text-gray-600 text-lg">Access a curated list of all available internships posted by the Coordinator.</p>
+            </div>
+
+            <div class="card bg-white p-10 rounded-2xl shadow-xl border-t-8 border-uoc-accent/80 hover:shadow-2xl">
+                <div class="text-uoc-accent mb-6"><i data-lucide="file-text" class="w-12 h-12"></i></div>
+                <h3 class="text-2xl font-bold text-uoc-text mb-4">One-Click Application & Real-Time Application Status</h3>
+                <p class="text-gray-600 text-lg">Apply to any opportunity with a single click , Track the current status of all your submitted applicationsv directly from your student dashboard.</p>
+            </div>
+            
+            <div class="card bg-white p-10 rounded-2xl shadow-xl border-t-8 border-uoc-accent/80 hover:shadow-2xl">
+                <div class="text-uoc-accent mb-6"><i data-lucide="messages-square" class="w-12 h-12"></i></div>
+                <h3 class="text-2xl font-bold text-uoc-text mb-4">Simplified Internship Posting & Centralized Application Review</h3>
+                <p class="text-gray-600 text-lg">Quickly post, edit, and manage internship listings on behalf of various organizations through a single, secure admin interface.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+---
+
+<section id="blogs" class="py-20 sm:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-5xl font-extrabold text-uoc-main mb-4">Student & Coordinator Blogs</h2>
+        <p class="text-xl text-gray-500 mb-10 max-w-4xl mx-auto">
+            Read inspiring stories, practical advice, and official coordinator announcements. Content is verified to maintain integrity and relevance.
+        </p>
+        <a href="login.html" class="inline-flex items-center px-10 py-4 text-xl text-white bg-uoc-main rounded-full font-bold shadow-lg shadow-uoc-main/30 hover:bg-uoc-accent transition duration-300 transform hover:scale-105">
+            View All Blogs <i data-lucide="send" class="w-6 h-6 ml-2"></i>
+        </a>
+    </div>
+</section>
+
+---
+
+<footer class="bg-uoc-main text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
+        
+        <div class="md:col-span-2">
+            <h4 class="text-3xl font-bold text-uoc-accent mb-4">Faculty of Technology</h4>
+            <p class="text-gray-400 text-sm max-w-md">
+                Department of ICT, University of Colombo. <br>
+                Dedicated to excellence in technology education and industry partnership.
+            </p>
+        </div>
+
+        <div>
+            <h4 class="text-xl font-semibold mb-4 text-white">Department</h4>
+            <ul class="space-y-2 text-gray-400">
+                <li><a href="#" class="hover:text-uoc-accent transition">FoT Official Site</a></li>
+                <li><a href="#" class="hover:text-uoc-accent transition">ICT Curriculum</a></li>
+                <li><a href="#" class="hover:text-uoc-accent transition">Internship Handbook</a></li>
+                <li><a href="#" class="hover:text-uoc-accent transition">Supervisor Login</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h4 class="text-xl font-semibold mb-4 text-white">Coordinator Contact</h4>
+            <ul class="space-y-2 text-gray-400">
+                <li class="flex items-center"><i data-lucide="mail" class="w-4 h-4 mr-2"></i> <a href="mailto:ict-internship@fot.cmb.ac.lk" class="hover:text-uoc-accent transition">ict-internship@fot.cmb.ac.lk</a></li>
+                <li class="flex items-center"><i data-lucide="phone" class="w-4 h-4 mr-2"></i> Ext: 1234 (Office)</li>
+                <li class="flex items-center"><i data-lucide="map-pin" class="w-4 h-4 mr-2"></i> FoT Main Building</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="border-t border-gray-700 mt-10 pt-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+        <p class="text-sm">© 2025 Department of ICT, Faculty of Technology, University of Colombo. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Simple scroll-to-section smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+</body>
+</html>
