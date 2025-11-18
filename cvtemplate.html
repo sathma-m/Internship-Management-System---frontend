@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CV Templates - UoC FoT ICT Internship System</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Define Colors based on Tailwind Config */
+        :root {
+            --uoc-main: #0c1b3c; /* Deep Navy/Official UoC Dark Blue */
+            --uoc-accent: #3b82f6; /* Light Blue (Highlight) */
+            --uoc-bg: #f5f7fa; /* Very Light Gray Background */
+            --uoc-text: #1f2937; /* Dark Gray for main text */
+            --color-green: #10b981;
+            --color-yellow: #f59e0b;
+            --color-red: #ef4444; /* Standard Red for warnings/important actions */
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--uoc-bg);
+            color: var(--uoc-text);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1280px; /* max-w-7xl */
+            margin: 0 auto;
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem; /* px-6 */
+        }
+
+        /* --- Header Styles (Copied from Dashboard) --- */
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            z-index: 50;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .logo-display {
+            display: flex;
+            align-items: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--uoc-main);
+            line-height: 1.2;
+            cursor: default;
+        }
+        
+        .logo-img {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.5rem;
+            margin-right: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--uoc-text);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--uoc-accent);
+        }
+        
+        .nav-active { /* Style for current page link */
+            color: var(--uoc-accent);
+        }
+
+
+        .logout-button {
+            padding: 0.5rem 1.25rem;
+            background-color: var(--uoc-main);
+            color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: var(--uoc-accent);
+        }
+
+        /* --- Main Content Styling --- */
+        .py-10 {
+            padding-top: 2.5rem;
+            padding-bottom: 2.5rem;
+        }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-10 { margin-bottom: 2.5rem; }
+        .mb-14 { margin-bottom: 3.5rem; }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--uoc-main);
+            margin-bottom: 0.5rem;
+        }
+        h2 {
+            font-size: 1.875rem;
+            font-weight: 800;
+            color: var(--uoc-main);
+        }
+        .text-gray-600 { color: #4b5563; }
+        .text-gray-500 { color: #6b7280; }
+
+        /* Template Grid */
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 2rem;
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .template-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        /* Template Card */
+        .template-card {
+            background-color: white;
+            padding: 3.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            border-top: 5px solid var(--uoc-accent);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .template-preview {
+            width: 15rem;
+            height: 15rem; /* Fixed height for visual consistency */
+            background-color: #f3f4f6; /* light gray placeholder */
+            border: 1px dashed var(--uoc-accent);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            color: var(--uoc-accent);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .template-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .template-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--uoc-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .download-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            background-color: var(--color-green);
+            color: white;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+            width: 100%;
+            max-width: 10rem;
+        }
+
+        .download-button:hover {
+            background-color: #059669; /* Darker green */
+        }
+    </style>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+        });
+    </script>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container header-content">
+        
+        <div class="logo-display">
+            <img src="./images/uni logo.png" class="logo-img" alt="UoC FoT Logo"/>
+            University of Colombo <br> Faculty of Technology <br> Dept. of ICT
+        </div>
+
+        <nav style="display: flex; gap: 2.5rem;" class="md:flex space-x-10 text-base font-semibold">
+            <a href="studentdashboard.html" class="nav-link">Dashboard</a>
+            <a href="cvtemplate.html" class="nav-link nav-active">CV Templates</a>
+            <a href="blogs.html" class="nav-link">Blogs</a>
+            
+            <a href="studentprofile.html" class="nav-link" style="display: flex; align-items: center;">
+                <i data-lucide="user" style="width: 1.25rem; height: 1.25rem; margin-right: 0.25rem;"></i> Profile
+            </a>
+        </nav>
+
+        <a href="index.html" class="logout-button">
+            Logout
+        </a>
+    </div>
+</header>
+
+<div class="container py-10">
+
+    <div class="mb-10">
+        <h1>Official CV Templates 📝</h1>
+        <p class="text-gray-600 text-lg">
+            Download our approved, professional CV templates to maximize your internship application success.
+        </p>
+    </div>
+
+    <h2 class="mb-6">Recommended Templates</h2>
+
+    <div class="template-grid mb-14">
+        
+        <div class="template-card">
+    <div class="template-preview">
+        <img src=".\images\Screenshot 2025-11-18 122624.jpg" alt="Modern Minimalist CV Template Preview">
+    </div>
+    <h3>Modern Minimalist</h3>
+    
+    <a href=".\templates\Deep Purple Professional College Student CV Resume.docx" download class="download-button">
+        <i data-lucide="download" style="width: 1.25rem; height: 1.25rem; margin-right: 0.5rem;"></i> Download
+    </a>
+</div>
+
+
+
+<div class="template-card">
+    <div class="template-preview">
+        <img src=".\images\Screenshot 2025-11-18 121549.jpg" alt="Creative Portfolio CV Template Preview">
+    </div>
+    <h3>Traditional Academic</h3>
+    
+    <a href=".\templates\Deep Purple Professional College Student CV Resume.docx" download class="download-button">
+        <i data-lucide="download" style="width: 1.25rem; height: 1.25rem; margin-right: 0.5rem;"></i> Download
+    </a>
+</div>
+
+    </div>
+    
+    <div style="background-color: #fef2f2; padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--color-red);">
+        <h4 style="font-size: 1.25rem; font-weight: 700; color: var(--color-red); margin-bottom: 0.5rem; display: flex; align-items: center;">
+            <i data-lucide="alert-triangle" style="width: 1.5rem; height: 1.5rem; margin-right: 0.5rem;"></i> Important Note
+        </h4>
+        <p class="text-gray-600">
+            **Always** customize the content to highlight your unique skills and experience. Do not submit the template with placeholder text. 
+    </div>
+
+</div>
+
+</body>
+</html>
