@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apply for Internship - UoC FoT ICT Internship System</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- REUSED STYLES from Dashboard for consistency --- */
+      :root {
+        --uoc-main: #0c1b3c; /* Deep Navy/Official UoC Dark Blue */
+        --uoc-accent: #3b82f6; /* Light Blue (Highlight) */
+        --uoc-bg: #f5f7fa; /* Very Light Gray Background */
+        --uoc-text: #1f2937; /* Dark Gray for main text */
+        --color-green: #10b981;
+        --color-yellow: #f59e0b;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--uoc-bg);
+        color: var(--uoc-text);
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      /* Header Styling (Reused) */
+      .header {
+        position: sticky;
+        top: 0;
+        background-color: white;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        z-index: 50;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+
+      .logo-link {
+        display: flex;
+        align-items: center;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--uoc-main);
+        line-height: 1.2;
+      }
+
+      .logo-img {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.5rem;
+        margin-right: 0.75rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+
+      .logout-button, .back-button {
+        padding: 0.5rem 1.25rem;
+        background-color: var(--uoc-main);
+        color: white;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        text-decoration: none;
+        transition: background-color 0.3s;
+        border: none;
+        cursor: pointer;
+      }
+
+      .logout-button:hover, .back-button:hover {
+        background-color: var(--uoc-accent);
+      }
+
+      /* Main Content Styling */
+      .py-10 {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+      }
+
+      .mb-6 {
+        margin-bottom: 1.5rem;
+      }
+
+      h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        color: var(--uoc-main);
+        margin-bottom: 0.5rem;
+      }
+      
+      h2 {
+        font-size: 1.875rem; 
+        font-weight: 800; 
+        color: var(--uoc-main);
+      }
+
+      .text-lg {
+        font-size: 1.125rem;
+      }
+      .text-gray-600 {
+        color: #4b5563;
+      }
+      .text-gray-500 {
+        color: #6b7280;
+      }
+
+      /* --- NEW APPLICATION FORM STYLES --- */
+      .application-form-card {
+        background-color: white;
+        padding: 2.5rem; /* p-10 */
+        border-radius: 1rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border-left: 8px solid var(--uoc-accent);
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--uoc-main);
+      }
+
+      .form-group input[type="text"],
+      .form-group input[type="email"],
+      .form-group input[type="file"],
+      .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db; /* border-gray-300 */
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        box-sizing: border-box; /* Include padding in the element's total width and height */
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      .form-group input[type="text"]:focus,
+      .form-group input[type="email"]:focus,
+      .form-group input[type="file"]:focus,
+      .form-group textarea:focus {
+        border-color: var(--uoc-accent);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* ring-4 ring-blue-300 */
+      }
+      
+      .form-group input[type="file"] {
+          padding-top: 1rem; /* Adjust padding for file input */
+          padding-bottom: 1rem;
+          background-color: var(--uoc-bg);
+          cursor: pointer;
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .submit-button {
+        padding: 0.75rem 2rem;
+        background-color: var(--color-green);
+        color: white;
+        border-radius: 0.5rem;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+      }
+      
+      .submit-button:hover {
+        background-color: #059669; /* Darker Green */
+      }
+      
+      .text-red-500 {
+          color: #ef4444; /* Standard Red */
+      }
+    </style>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+      });
+    </script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="container header-content">
+        <div class="logo-link">
+          <img
+            src="./images/uni logo.png"
+            class="logo-img"
+            alt="UoC FoT Logo"
+          />
+          University of Colombo <br />
+          Faculty of Technology <br />
+          Dept. of ICT
+        </div>
+        <div style="display: flex; gap: 1rem;">
+            <a href="studentdashboard.html" class="back-button" style="background-color: #6b7280;"> 
+                <i data-lucide="arrow-left" style="width: 1rem; height: 1rem; display: inline-block; vertical-align: middle;"></i>
+                Back to Dashboard 
+            </a>
+            <a href="index.html" class="logout-button"> Logout </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container py-10">
+      <div class="mb-6" style="max-width: 800px; margin: 0 auto 2.5rem;">
+        <h1>Apply for Internship</h1>
+        <p class="text-gray-600 text-lg">
+         
+        </p>
+      </div>
+
+      <div class="application-form-card">
+        <form action="/submit-application" method="POST" enctype="multipart/form-data"> 
+          
+          <div style="text-align: right; margin-bottom: 2rem;">
+            <p class="text-sm text-red-500">* Required Fields</p>
+          </div>
+          
+          <input type="hidden" name="internship_id" value="[INTERNSHIP_ID_HERE]"> 
+          
+          <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Personal Information</h2>
+
+          <div class="form-group">
+            <label for="email"> Full name <span class="text-red-500">*</span></label>
+            <input type="text" id="name" name="name"  style="background-color: var(--uoc-bg); cursor: not-allowed;" />
+          </div>
+
+          <div class="form-group">
+            <label for="student_id">Registration Number <span class="text-red-500">*</span></label>
+            <input type="text" id="student_id" name="student_id"  style="background-color: var(--uoc-bg); cursor: not-allowed;" />
+          </div>
+
+          <div class="form-group">
+            <label for="email">UoC Email Address <span class="text-red-500">*</span></label>
+            <input type="email" id="email" name="email"  style="background-color: var(--uoc-bg); cursor: not-allowed;" />
+          </div>
+
+          <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 2rem 0;" />
+          
+          <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Application Documents</h2>
+
+          <div class="form-group">
+            <label for="cv_file">Upload Your CV (PDF only) <span class="text-red-500">*</span></label>
+            <input type="file" id="cv_file" name="cv_file" accept=".pdf" required />
+            <p class="text-sm text-gray-500" style="margin-top: 0.25rem;">Max file size: 5MB. Must be a PDF document.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="cover_letter_file">Upload Cover Letter (Optional, PDF only)</label>
+            <input type="file" id="cover_letter_file" name="cover_letter_file" accept=".pdf" />
+            <p class="text-sm text-gray-500" style="margin-top: 0.25rem;">Optional, but highly recommended.</p>
+          </div>
+          
+          <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 2rem 0;" />
+          
+          <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Additional Information</h2>
+
+          <div class="form-group">
+            <label for="message">Message to the Company (Max 500 characters)</label>
+            <textarea id="message" name="message" rows="4" maxlength="500" placeholder="Briefly state your motivation and why you are a good fit..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="submit-button">
+                <i data-lucide="send" style="width: 1rem; height: 1rem; display: inline-block; vertical-align: middle; margin-right: 0.25rem;"></i>
+                Submit Application
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
